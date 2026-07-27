@@ -293,7 +293,7 @@ export const getTokenEarnSources = async () => {
 };
 
 // Export all token service functions
-export default {
+const tokenService = {
   getTokenBalance,
   getTokenTransactions,
   getTokenTransaction,
@@ -302,3 +302,5 @@ export default {
   getRedemptionServices,
   getTokenEarnSources
 };
+
+export default tokenService;

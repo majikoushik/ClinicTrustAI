@@ -60,14 +60,14 @@ export const getReferrals = async (options = {}) => {
       }
       
       // Filter by status
-      if (queryOptions.status && queryOptions.status != 'all') {
+      if (queryOptions.status && queryOptions.status !== 'all') {
         filteredReferrals = filteredReferrals.filter(
           referral => referral.status === queryOptions.status
         );
       }
       
       // Filter by priority
-      if (queryOptions.priority && queryOptions.priority != 'all') {
+      if (queryOptions.priority && queryOptions.priority !== 'all') {
         filteredReferrals = filteredReferrals.filter(
           referral => referral.priority === queryOptions.priority
         );
@@ -598,7 +598,7 @@ export const getReferralStatusCounts = async () => {
 };
 
 // Export all referral service functions
-export default {
+const referralService = {
   getReferrals,
   getReferralById,
   createReferral,
@@ -615,3 +615,5 @@ export default {
   getProviders,
   getPatientRecords
 };
+
+export default referralService;

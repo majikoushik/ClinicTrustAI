@@ -385,7 +385,7 @@ export const getUserById = async (userId) => {
 };
 
 // Export all user service functions
-export default {
+const userService = {
   getUserProfile,
   updateUserProfile,
   updateProfileImage,
@@ -395,3 +395,5 @@ export default {
   getAllUsers,
   getUserById
 };
+
+export default userService;
