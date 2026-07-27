@@ -4,13 +4,13 @@
 
 ---
 
-LIve Application : https://clinic-trust-ai.vercel.app/
+### Live Application : https://clinic-trust-ai.vercel.app/
 
-Doctor User Id: john.smith@clinictrustai.com
-Doctor Password: Demo1234!
+- Doctor User Id: john.smith@clinictrustai.com
+- Doctor Password: Demo1234!
 
-Admin User Id: admin@clinictrustai.com
-Admin Password: Demo1234!
+- Admin User Id: admin@clinictrustai.com
+- Admin Password: Demo1234!
 
 ## Table of Contents
 
