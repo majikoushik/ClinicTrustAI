@@ -356,7 +356,7 @@ const getPlatformOverview = async () => {
   }
 };
 
-export default {
+const adminAnalyticsService = {
   getProviderPerformance,
   getReferralConversionRates,
   getTokenEconomyTrends,
@@ -373,3 +373,5 @@ export default {
   deleteScheduledReport,
   getAdminEmails,
 };
+
+export default adminAnalyticsService;

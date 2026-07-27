@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -48,7 +48,8 @@ export default function TokenRedeem() {
   
   // Get data from Redux
   const tokenBalance = useSelector(selectTokenBalance);
-  const services = useSelector(selectRedemptionServices) || [];
+  const redemptionServices = useSelector(selectRedemptionServices);
+  const services = useMemo(() => redemptionServices || [], [redemptionServices]);
   const tokenLoading = useSelector(selectTokenLoading);
   
   // Local UI state

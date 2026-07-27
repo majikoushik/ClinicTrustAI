@@ -589,7 +589,7 @@ export const getEscalationStatistics = async () => {
 };
 
 // Export all services
-export default {
+const adminMessagingService = {
   // Broadcast Messages
   getBroadcastMessages,
   getBroadcastMessageById,
@@ -614,3 +614,5 @@ export default {
   resolveEscalationWorkflow,
   getEscalationStatistics
 };
+
+export default adminMessagingService;

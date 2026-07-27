@@ -24,10 +24,7 @@ import {
   GppGood as ComplianceIcon,
   Assignment as PriorAuthIcon,
   Hub as FHIRIcon,
-  Token as TokenIcon,
-  SwapHoriz as ReferralIcon,
   Storage as BlockchainIcon,
-  Analytics as AnalyticsIcon,
 } from '@mui/icons-material';
 
 export default function LandingPage() {

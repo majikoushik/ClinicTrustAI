@@ -56,7 +56,9 @@ export const getTransactionDetails = async (hash) => {
   }
 };
 
-export default {
+const blockchainService = {
   getTransactionHistory,
   getTransactionDetails
 };
+
+export default blockchainService;

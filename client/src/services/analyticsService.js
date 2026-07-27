@@ -536,7 +536,7 @@ export const getProviderBenchmarking = async (options = {}) => {
 };
 
 // Export all analytics service functions
-export default {
+const analyticsService = {
   getAnalyticsReports,
   getAnalyticsReportById,
   createAnalyticsReport,
@@ -547,3 +547,5 @@ export default {
   getNaturalLanguageSummary,
   getProviderBenchmarking
 };
+
+export default analyticsService;

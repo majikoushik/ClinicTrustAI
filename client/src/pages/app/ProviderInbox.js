@@ -30,7 +30,7 @@ const avatarColor = (name = '') =>
 
 // ── Thread list item ──────────────────────────────────────────────────────────
 function ThreadListItem({ thread, selected, onClick }) {
-  const { lastMessage: lm, totalMessages, unreadCount, referral } = thread;
+  const { lastMessage: lm, unreadCount, referral } = thread;
   const otherName = lm ? (lm.senderName === 'You' ? lm.receiverName : lm.senderName) : 'Provider';
   const patientLabel = referral?.patientName || referral?.patient?.name || 'Patient';
 

@@ -9,7 +9,7 @@ import {
 } from '@mui/material';
 import {
   Search as SearchIcon, Flag as FlagIcon, Visibility as VisibilityIcon,
-  History as HistoryIcon, GetApp as DownloadIcon,
+  GetApp as DownloadIcon,
   VerifiedUser as VerifiedUserIcon, Warning as WarningIcon,
   Person as PersonIcon, LocalHospital as HospitalIcon,
   Security as LockIcon, Man as ManIcon, Woman as WomanIcon,

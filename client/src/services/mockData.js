@@ -3608,7 +3608,7 @@ export const generateMockTokenRedemption = (redemptionData, userData) => {
 // Export all mock data generators as named exports
 
 // Add default export for backward compatibility
-export default {
+const mockData = {
   generateUsers,
   generatePatients,
   generateTokenTransactions,
@@ -3617,3 +3617,5 @@ export default {
   generateMedicalRecords,
   mockTokenEarnSources,
   mockRedemptionServices};
+
+export default mockData;

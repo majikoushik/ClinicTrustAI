@@ -24,7 +24,6 @@ import {
   Snackbar,
   Divider,
   Switch,
-  FormControlLabel,
 } from '@mui/material';
 import {
   Refresh as RefreshIcon,
@@ -37,7 +36,6 @@ import {
   RateReview as ReviewIcon,
   Feedback as FeedbackIcon,
   Schedule as ScheduleIcon,
-  Visibility as ViewIcon,
 } from '@mui/icons-material';
 import Tooltip from '@mui/material/Tooltip';
 import LinearProgress from '@mui/material/LinearProgress';
@@ -60,7 +58,6 @@ import { adminMockData } from '../../services/mockData';
 
 const AdminAIManagement = () => {
   // State variables
-  const [tabValue] = useState(0);
   const [statusFilter, setStatusFilter] = useState('all');
   const [reports, setReports] = useState([]);
   const [loading, setLoading] = useState(true);

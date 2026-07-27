@@ -184,7 +184,7 @@ export default function MainLayout() {
     if (currentUser && !['admin','superadmin'].includes(currentUser.role) && currentUser.onboardingStatus !== 'verified') {
       navigate('/onboarding');
     }
-  }, [currentUser]);
+  }, [currentUser, navigate]);
 
   // Fetch referral counts when component mounts
   useEffect(() => {

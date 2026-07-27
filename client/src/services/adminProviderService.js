@@ -313,7 +313,7 @@ export const getProviderStatistics = async () => {
   }
 };
 
-export default {
+const adminProviderService = {
   getAllProviders,
   getProviderById,
   updateProvider,
@@ -324,3 +324,5 @@ export default {
   deleteProvider,
   getProviderStatistics
 };
+
+export default adminProviderService;

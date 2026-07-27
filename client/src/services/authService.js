@@ -342,7 +342,7 @@ export const isAuthenticated = () => {
 };
 
 // Export all auth service functions
-export default {
+const authService = {
   login,
   register,
   logout,
@@ -354,3 +354,5 @@ export default {
   getCurrentUser,
   isAuthenticated
 };
+
+export default authService;

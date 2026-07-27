@@ -149,7 +149,7 @@ export const updateUser = async (userId, userData) => {
   }
 };
 
-export default {
+const adminService = {
   getSystemStatus,
   getAllSettings,
   getSettingsByCategory,
@@ -161,3 +161,5 @@ export default {
   getAllUsers,
   updateUser
 };
+
+export default adminService;

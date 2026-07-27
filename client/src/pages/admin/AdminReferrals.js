@@ -4,8 +4,8 @@ import {
   Container, Typography, Box, Paper, Table, TableBody, TableCell, TableContainer, TableHead,
   TableRow, TablePagination, Alert, Button, Dialog, DialogTitle,
   DialogContent, DialogActions, TextField, FormControl, InputLabel, Select, MenuItem,
-  IconButton, Chip, Tabs, Tab, Grid, Card, CardContent, Tooltip, Badge, CircularProgress,
-  Switch, Divider, Snackbar, InputAdornment
+  IconButton, Chip, Tabs, Tab, Grid, Card, CardContent, Badge, CircularProgress,
+  Switch, Divider, Snackbar
 } from '@mui/material';
 import { ModernLoadingIndicator } from '../../components/common';
 import EllipsisCell from '../../components/common/EllipsisCell';
@@ -16,9 +16,7 @@ import {
 import {
   Search as SearchIcon,
   Visibility as VisibilityIcon,
-  Warning as WarningIcon,
   Assessment as AssessmentIcon,
-  CheckCircle as CheckCircleIcon
 } from '@mui/icons-material';
 import adminReferralService from '../../services/adminReferralService';
 import { get, put } from '../../utils/apiUtils';
@@ -231,21 +229,6 @@ const AdminReferrals = () => {
           case 'cancelled': return 'default';
           case 'rejected':  return 'error';
           default:          return 'default';
-        }
-      };
-    
-      const getPriorityColor = (priority) => {
-        switch (priority) {
-          case 'Critical':
-            return 'error';
-          case 'High':
-            return 'warning';
-          case 'Medium':
-            return 'info';
-          case 'Low':
-            return 'success';
-          default:
-            return 'default';
         }
       };
     

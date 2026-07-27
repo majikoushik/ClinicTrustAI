@@ -530,28 +530,6 @@ function Dashboard() {
     setClinicalMetrics(data);
   }, []);
   
-  // Generate patient risk data for chart
-  const generatePatientRiskData = useCallback(() => {
-    // Add null checks to prevent TypeError
-    if (!dashboardData || !dashboardData.patients) {
-      return;
-    }
-    
-    // Get values with fallbacks to prevent errors
-    const total = dashboardData.patients.total || 100;
-    const highRisk = dashboardData.patients.highRisk || 20;
-    const mediumRiskCount = Math.floor(total * 0.3);
-    const lowRiskCount = total - highRisk - mediumRiskCount;
-    
-    const data = [
-      { name: 'High Risk', value: highRisk },
-      { name: 'Medium Risk', value: mediumRiskCount },
-      { name: 'Low Risk', value: lowRiskCount },
-    ];
-    
-    setPatientRiskData(data);
-  }, [dashboardData]);
-  
   // Generate referral efficiency data from real referral statistics
   const generateReferralEfficiencyData = useCallback((referralStats) => {
     if (!referralStats || !referralStats.total) {

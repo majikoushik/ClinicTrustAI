@@ -27,7 +27,6 @@ import {
   Chat as NotesIcon,
   Send as SendIcon,
   DoneAll as BulkIcon,
-  SelectAll as SelectAllIcon,
   MoreVert as MoreVertIcon
 } from '@mui/icons-material';
 import {

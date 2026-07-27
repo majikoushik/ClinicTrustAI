@@ -16,7 +16,6 @@ import {
   ArrowForward as ArrowIcon,
   CloudUpload as UploadIcon,
   TaskAlt as TaskAltIcon,
-  MarkEmailRead as MarkEmailIcon,
 } from '@mui/icons-material';
 import onboardingService from '../../services/onboardingService';
 import { useAuth } from '../../contexts';
@@ -255,9 +254,12 @@ export default function OnboardingWall() {
     if (!authLoading && !currentUser) {
       startTransition(() => navigate('/login'));
     }
-  }, [authLoading, currentUser]);
+  }, [authLoading, currentUser, navigate, startTransition]);
 
-  useEffect(() => { loadStatus(); }, []);
+  useEffect(() => {
+    loadStatus();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const loadStatus = async () => {
     try {

@@ -102,7 +102,7 @@ export default function TokenTransfer() {
     };
 
     fetchRecipients();
-  }, [dispatch]);
+  }, [dispatch, currentUser?._id, currentUser?.id]);
 
   const handleRecipientChange = (event, newValue) => {
     setTransferData({

@@ -343,6 +343,7 @@ export default function CreateAnalytics() {
       ...prev,
       parameters: initialParameters
     }));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [analyticsData.type]);
 
   const handleInputChange = (e) => {

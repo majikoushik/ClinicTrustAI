@@ -23,7 +23,7 @@ import {
   AccessTime as TimeIcon,
 } from '@mui/icons-material';
 import { get, put } from '../../utils/apiUtils';
-import { formatDate, formatDateTime, formatScheduledDateTime } from '../../utils/dateFormatter';
+import { formatDateTime, formatScheduledDateTime } from '../../utils/dateFormatter';
 import EllipsisCell from '../../components/common/EllipsisCell';
 import {
   tableContainerSx, tableSx, tableHeadRowSx, tableBodyRowSx, compactChipSx,

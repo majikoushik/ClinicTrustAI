@@ -274,10 +274,12 @@ export const deleteNotification = async (notificationId) => {
 };
 
 // Export all notification service functions
-export default {
+const notificationService = {
   getNotifications,
   getUnreadCount,
   markAsRead,
   markAllAsRead,
   deleteNotification
 };
+
+export default notificationService;

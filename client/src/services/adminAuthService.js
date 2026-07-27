@@ -80,8 +80,10 @@ export const adminLogout = () => {
   window.location.href = '/admin/login';
 };
 
-export default {
+const adminAuthService = {
   adminLogin,
   verifyAdminToken,
   adminLogout
 };
+
+export default adminAuthService;

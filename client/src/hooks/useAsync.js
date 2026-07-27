@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useCallback, useEffect, useRef } from 'react';
 
 export default function useAsync(
@@ -44,7 +45,7 @@ export default function useAsync(
         setLoading(false);
       }
     }
-  }, [asyncFunction]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [asyncFunction]);
 
   const reset = useCallback(() => {
     if (isMounted.current) {
@@ -55,7 +56,6 @@ export default function useAsync(
     }
   }, [initialData]);
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (immediate) {
       execute();

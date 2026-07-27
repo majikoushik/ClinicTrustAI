@@ -267,7 +267,7 @@ export const removeConversionRule = async (ruleId) => {
 };
 
 // Export all admin token service functions
-export default {
+const adminTokenService = {
   getProviderTokenBalances,
   getProviderTokenHistory,
   mintTokens,
@@ -280,3 +280,5 @@ export default {
   addConversionRule,
   removeConversionRule
 };
+
+export default adminTokenService;

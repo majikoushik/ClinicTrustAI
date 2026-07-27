@@ -12,19 +12,17 @@ import {
   CheckCircle as ApproveIcon, Cancel as RejectIcon, Download as DownloadIcon,
   Schedule as PendingIcon, VerifiedUser as VerifiedIcon, Person as PersonIcon,
   Business as OrgIcon, Phone as PhoneIcon, LocationOn as LocationIcon,
-  AssignmentInd as LicenseIcon, Close as CloseIcon, Email as EmailIcon,
+  AssignmentInd as LicenseIcon, Close as CloseIcon,
   Edit as EditIcon, Print as FaxIcon, Badge as BadgeIcon,
-  MedicalServices as MedicalIcon, PeopleAlt as PeopleIcon,
   DeleteOutline as DeleteIcon, WarningAmber as WarnIcon,
   ForwardToInbox as ResendEmailIcon, MoreVert as MoreVertIcon,
 } from '@mui/icons-material';
 import { get, post, patch, del } from '../../utils/apiUtils';
 import { authStorage } from '../../utils/storageUtils';
-import { formatDate, formatDateTime } from '../../utils/dateFormatter';
+import { formatDate } from '../../utils/dateFormatter';
 import EllipsisCell from '../../components/common/EllipsisCell';
 import {
   tableContainerSx, tableSx, tableHeadRowSx, tableBodyRowSx, compactChipSx,
-  pageHeaderBoxSx,
 } from '../../components/common/adminTableStyles';
 
 const _RAW = process.env.REACT_APP_API_URL || 'http://localhost:5000';

@@ -2,12 +2,12 @@ import React, { useState, useTransition } from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import {
-  Box, Button, TextField, Typography, Paper, Grid, Alert,
+  Box, Button, TextField, Typography, Grid, Alert,
   CircularProgress, Stepper, Step, StepLabel, Card, CardContent,
   Divider, InputAdornment, IconButton, LinearProgress, Link, Chip
 } from '@mui/material';
 import {
-  Search as SearchIcon, CheckCircle as CheckIcon, Email as EmailIcon,
+  CheckCircle as CheckIcon, Email as EmailIcon,
   Visibility, VisibilityOff, ArrowBack as BackIcon, LocalHospital as NpiIcon,
   Person as PersonIcon, Business as OrgIcon
 } from '@mui/icons-material';
@@ -17,8 +17,6 @@ import { authStorage } from '../../utils/storageUtils';
 const _RAW = process.env.REACT_APP_API_URL || 'http://localhost:5000';
 const API_BASE = _RAW.replace(/\/api$/, '');
 const STEPS = ['Find Your NPI', 'Account Setup', 'Verify Email'];
-const PROVIDER_ROLES = ['doctor', 'clinic', 'hospital', 'lab', 'provider'];
-
 function passwordStrength(p) {
   if (!p) return { level: 0, label: '', color: 'grey' };
   if (p.length < 8) return { level: 1, label: 'Too short', color: 'error' };
@@ -39,7 +37,7 @@ export default function Register() {
   const [submitting, setSubmitting] = useState(false);
   const [resendCooldown, setResendCooldown] = useState(0);
   const [registeredEmail, setRegisteredEmail] = useState('');
-  const [registeredToken, setRegisteredToken] = useState('');
+  const [, setRegisteredToken] = useState('');
   const [error, setError] = useState('');
   const [emailExists, setEmailExists] = useState(false);
   const [npiStatus, setNpiStatus] = useState('');

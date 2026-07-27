@@ -99,7 +99,7 @@ export const revokeConsentRecord = async (patientId, consentId) => {
   }
 };
 
-export default {
+const patientService = {
   getPatients,
   getPatientById,
   createPatient,
@@ -111,3 +111,5 @@ export default {
   revokeConsentRecord,
   exportPatientEHI,
 };
+
+export default patientService;

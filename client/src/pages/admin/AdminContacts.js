@@ -472,7 +472,6 @@ export default function AdminContacts() {
                 <TableBody>
                   {paginated.map(contact => {
                     const inq = INQUIRY_META[contact.inquiryType] || INQUIRY_META.general;
-                    const sta = STATUS_META[contact.status]  || STATUS_META.new;
                     const isNew = contact.status === 'new';
                     return (
                       <TableRow

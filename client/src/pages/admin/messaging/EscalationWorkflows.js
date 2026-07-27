@@ -124,11 +124,13 @@ const EscalationWorkflows = () => {
   useEffect(() => {
     fetchWorkflows();
     fetchStatistics();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Fetch workflows when filters change
   useEffect(() => {
     fetchWorkflows();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filters]);
 
   // Fetch workflows from the service

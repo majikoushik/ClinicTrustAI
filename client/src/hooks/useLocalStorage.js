@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 
 /**
  * Custom hook for working with localStorage
@@ -9,7 +9,7 @@ import { useState, useEffect } from 'react';
  */
 export default function useLocalStorage(key, initialValue) {
   // Get stored value from localStorage
-  const readValue = () => {
+  const readValue = useCallback(() => {
     if (typeof window === 'undefined') {
       return initialValue;
     }
@@ -21,7 +21,7 @@ export default function useLocalStorage(key, initialValue) {
       console.warn(`Error reading localStorage key "${key}":`, error);
       return initialValue;
     }
-  };
+  }, [initialValue, key]);
   
   // State to store our value
   const [storedValue, setStoredValue] = useState(readValue);
@@ -81,7 +81,7 @@ export default function useLocalStorage(key, initialValue) {
       window.removeEventListener('local-storage', handleStorageChange);
       window.removeEventListener('storage', handleStorageChange);
     };
-  }, []);
+  }, [readValue]);
   
   return [storedValue, setValue, removeValue];
 }

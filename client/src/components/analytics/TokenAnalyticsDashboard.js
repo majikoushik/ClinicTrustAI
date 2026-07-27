@@ -72,6 +72,7 @@ export default function TokenAnalyticsDashboard({
   // Generate token analytics data when component mounts or time range changes
   useEffect(() => {
     generateTokenAnalytics(timeRange);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [timeRange]);
   
   // Generate token analytics data based on time range

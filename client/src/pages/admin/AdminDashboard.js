@@ -6,7 +6,7 @@ import {
   FormControl, InputLabel, Select, Chip, Alert,
   Table, TableBody, TableCell, TableContainer, TableHead, TableRow,
   List, ListItem, ListItemIcon, ListItemText, Divider,
-  LinearProgress, Tooltip, Avatar,
+  LinearProgress, Avatar,
 } from '@mui/material';
 import { ModernLoadingIndicator } from '../../components/common';
 import EllipsisCell from '../../components/common/EllipsisCell';
@@ -38,16 +38,15 @@ import {
   Mic as MicIcon,
   Psychology as AIIcon,
   NotificationsActive as EngageIcon,
-  LocalPharmacy as RxIcon,
 } from '@mui/icons-material';
 import {
   BarChart, Bar, LineChart, Line,
   XAxis, YAxis, CartesianGrid, Tooltip as RechartTooltip,
-  Legend, ResponsiveContainer, PieChart, Pie, Cell,
+  Legend, ResponsiveContainer,
 } from 'recharts';
 import { adminAnalyticsService } from '../../services';
 import { post } from '../../utils/apiUtils';
-import { formatDate, formatDateTime, formatRelativeTime } from '../../utils/dateFormatter';
+import { formatDate, formatRelativeTime } from '../../utils/dateFormatter';
 import { useNavigate } from 'react-router-dom';
 
 // ─── helpers ─────────────────────────────────────────────────────────────────
