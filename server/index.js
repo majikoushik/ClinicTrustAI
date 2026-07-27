@@ -4,6 +4,7 @@ const helmet = require('helmet');
 const morgan = require('morgan');
 const rateLimit = require('express-rate-limit');
 const path = require('path');
+const fs = require('fs');
 const dotenv = require('dotenv');
 const mongoose = require('mongoose');
 
@@ -175,10 +176,35 @@ function mountStaticFiles() {
   // Serve uploaded files (avatars, KYC docs) in all environments
   app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
+  app.get('/health', (req, res) => {
+    res.json({
+      success: true,
+      status: 'ok',
+      service: 'ClinicTrust AI API',
+      timestamp: new Date().toISOString(),
+    });
+  });
+
   if (process.env.NODE_ENV === 'production') {
-    app.use(express.static(path.join(__dirname, '../client/build')));
+    const clientBuildPath = path.join(__dirname, '../client/build');
+    const clientIndexPath = path.join(clientBuildPath, 'index.html');
+
+    if (!fs.existsSync(clientIndexPath)) {
+      app.get('/', (req, res) => {
+        res.json({
+          success: true,
+          status: 'ok',
+          service: 'ClinicTrust AI API',
+          message: 'Backend is running. Frontend is deployed separately.',
+          timestamp: new Date().toISOString(),
+        });
+      });
+      return;
+    }
+
+    app.use(express.static(clientBuildPath));
     app.get('*', (req, res) => {
-      res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
+      res.sendFile(path.resolve(clientIndexPath));
     });
   }
 }
