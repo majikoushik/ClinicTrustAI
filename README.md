@@ -4,6 +4,8 @@
 
 ---
 
+LIve Application : https://clinic-trust-ai.vercel.app/
+
 ## Table of Contents
 
 - [Solution Overview](#solution-overview)
@@ -34,17 +36,17 @@
 
 ClinicTrust AI is an enterprise healthcare platform that solves critical problems in modern healthcare systems:
 
-| Problem | Solution |
-|---|---|
-| Fragmented, insecure patient records | Polygon (EVM) blockchain + tamper-evident MongoDB ledger for immutable record sharing |
-| Reactive, siloed clinical decision-making | TensorFlow.js-powered predictive analytics surfaced on real-time dashboards |
-| Lack of incentive for data contribution | Smart-contract-driven token economy rewarding clinicians and patients |
-| Regulatory non-compliance (21st Century Cures Act) | Full FHIR R4 API with Information Blocking safeguards |
-| Manual, error-prone prior authorization | Automated PA engine with payer rule evaluation and decision tracking |
-| Poor patient communication and follow-up | Multi-channel engagement platform (email, SMS, push, in-app) |
-| Inefficient specialist referral selection | AI-powered provider matching with weighted scoring across 5 dimensions |
-| Incomplete clinical documentation at point of care | Ambient speech recognition + Azure OpenAI clinical note generation |
-| Fragmented appointment booking across provider workflows | Provider-initiated patient self-scheduling with waitlist, reminders, and token rewards |
+| Problem                                                            | Solution                                                                                                  |
+| ------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------- |
+| Fragmented, insecure patient records                               | Polygon (EVM) blockchain + tamper-evident MongoDB ledger for immutable record sharing                     |
+| Reactive, siloed clinical decision-making                          | TensorFlow.js-powered predictive analytics surfaced on real-time dashboards                               |
+| Lack of incentive for data contribution                            | Smart-contract-driven token economy rewarding clinicians and patients                                     |
+| Regulatory non-compliance (21st Century Cures Act)                 | Full FHIR R4 API with Information Blocking safeguards                                                     |
+| Manual, error-prone prior authorization                            | Automated PA engine with payer rule evaluation and decision tracking                                      |
+| Poor patient communication and follow-up                           | Multi-channel engagement platform (email, SMS, push, in-app)                                              |
+| Inefficient specialist referral selection                          | AI-powered provider matching with weighted scoring across 5 dimensions                                    |
+| Incomplete clinical documentation at point of care                 | Ambient speech recognition + Azure OpenAI clinical note generation                                        |
+| Fragmented appointment booking across provider workflows           | Provider-initiated patient self-scheduling with waitlist, reminders, and token rewards                    |
 | No structured pathway from referral to evidence-based digital care | DTx Marketplace linking specialist referrals to vetted digital therapeutic programs with outcome tracking |
 
 This repository demonstrates a **cloud-native, microservices-aligned full-stack architecture** — from smart contract design through REST/GraphQL API layers to a React SPA — deployable on Azure App Service with a managed MongoDB Atlas backend.
@@ -106,46 +108,46 @@ This repository demonstrates a **cloud-native, microservices-aligned full-stack 
 
 ### Backend
 
-| Layer | Technology | Version | Purpose |
-|---|---|---|---|
-| Runtime | Node.js | v18+ | Server-side JavaScript runtime |
-| Framework | Express.js | ^4.18.2 | REST API and middleware pipeline |
-| Query Language | GraphQL / express-graphql | ^0.12.0 | Flexible data querying for analytics |
-| Database | MongoDB + Mongoose | ^7.0.3 | Document store for operational data |
-| Blockchain | Polygon (EVM) via ethers.js | ^6.17.0 | On-chain ClinicToken (ERC-20) mint/burn + tamper-evident MongoDB ledger fallback |
-| Contract Tooling | Hardhat + OpenZeppelin | ^2.22.0 / ^5.0.0 | Solidity compilation, testnet/mainnet deployment, contract verification |
-| Authentication | JWT + bcryptjs | ^9.0.0 / ^2.4.3 | Stateless auth with secure password hashing |
-| AI Integration | Azure OpenAI + Azure Speech | REST / SDK | Clinical note generation and speech transcription |
-| Email | Nodemailer (Gmail SMTP) | ^9.0.1 | Transactional email — password reset, KYC status, referral notifications |
-| Logging | Winston + Morgan | ^3.8.2 / ^1.10.0 | Structured logging and HTTP request tracing |
-| Config | dotenv | ^16.3.1 | 12-factor app configuration |
-| Dev Tooling | nodemon + concurrently | ^2.0.22 / ^8.2.0 | Hot reload and parallel process management |
+| Layer            | Technology                  | Version          | Purpose                                                                          |
+| ---------------- | --------------------------- | ---------------- | -------------------------------------------------------------------------------- |
+| Runtime          | Node.js                     | v18+             | Server-side JavaScript runtime                                                   |
+| Framework        | Express.js                  | ^4.18.2          | REST API and middleware pipeline                                                 |
+| Query Language   | GraphQL / express-graphql   | ^0.12.0          | Flexible data querying for analytics                                             |
+| Database         | MongoDB + Mongoose          | ^7.0.3           | Document store for operational data                                              |
+| Blockchain       | Polygon (EVM) via ethers.js | ^6.17.0          | On-chain ClinicToken (ERC-20) mint/burn + tamper-evident MongoDB ledger fallback |
+| Contract Tooling | Hardhat + OpenZeppelin      | ^2.22.0 / ^5.0.0 | Solidity compilation, testnet/mainnet deployment, contract verification          |
+| Authentication   | JWT + bcryptjs              | ^9.0.0 / ^2.4.3  | Stateless auth with secure password hashing                                      |
+| AI Integration   | Azure OpenAI + Azure Speech | REST / SDK       | Clinical note generation and speech transcription                                |
+| Email            | Nodemailer (Gmail SMTP)     | ^9.0.1           | Transactional email — password reset, KYC status, referral notifications         |
+| Logging          | Winston + Morgan            | ^3.8.2 / ^1.10.0 | Structured logging and HTTP request tracing                                      |
+| Config           | dotenv                      | ^16.3.1          | 12-factor app configuration                                                      |
+| Dev Tooling      | nodemon + concurrently      | ^2.0.22 / ^8.2.0 | Hot reload and parallel process management                                       |
 
 ### Frontend
 
-| Layer | Technology | Version | Purpose |
-|---|---|---|---|
-| Framework | React | ^18.2.0 | Component-driven UI |
-| UI Library | Material UI (MUI) | ^5.12.1 | Enterprise-grade component system |
-| State | Redux Toolkit | ^2.8.2 | Predictable global state management |
-| Routing | React Router | ^6.10.0 | Client-side navigation |
-| HTTP | Axios | ^1.3.6 | API communication with interceptors |
-| Charts | Recharts + Chart.js | ^3.1.0 / ^4.2.1 | Data visualisation |
-| AI / ML | TensorFlow.js | ^4.4.0 | In-browser predictive analytics |
-| Speech | Web Speech API (browser-native) | — | Real-time ambient speech-to-text transcription |
-| Reports | jsPDF + jspdf-autotable | ^3.0.1 | PDF report generation |
+| Layer      | Technology                      | Version         | Purpose                                        |
+| ---------- | ------------------------------- | --------------- | ---------------------------------------------- |
+| Framework  | React                           | ^18.2.0         | Component-driven UI                            |
+| UI Library | Material UI (MUI)               | ^5.12.1         | Enterprise-grade component system              |
+| State      | Redux Toolkit                   | ^2.8.2          | Predictable global state management            |
+| Routing    | React Router                    | ^6.10.0         | Client-side navigation                         |
+| HTTP       | Axios                           | ^1.3.6          | API communication with interceptors            |
+| Charts     | Recharts + Chart.js             | ^3.1.0 / ^4.2.1 | Data visualisation                             |
+| AI / ML    | TensorFlow.js                   | ^4.4.0          | In-browser predictive analytics                |
+| Speech     | Web Speech API (browser-native) | —               | Real-time ambient speech-to-text transcription |
+| Reports    | jsPDF + jspdf-autotable         | ^3.0.1          | PDF report generation                          |
 
 ### Infrastructure
 
-| Component | Technology |
-|---|---|
-| Cloud Platform | Microsoft Azure App Service (Linux) |
-| Database Cloud | MongoDB Atlas |
-| AI Services | Azure OpenAI, Azure Cognitive Services (Speech) |
-| Blockchain | Polygon PoS (Amoy testnet or mainnet) — optional, ledger mode by default |
-| Email | Gmail SMTP (App Password) |
-| Node Target | v20.x (Azure) |
-| Deployment | ZIP deploy via Azure Deployment Center |
+| Component      | Technology                                                               |
+| -------------- | ------------------------------------------------------------------------ |
+| Cloud Platform | Microsoft Azure App Service (Linux)                                      |
+| Database Cloud | MongoDB Atlas                                                            |
+| AI Services    | Azure OpenAI, Azure Cognitive Services (Speech)                          |
+| Blockchain     | Polygon PoS (Amoy testnet or mainnet) — optional, ledger mode by default |
+| Email          | Gmail SMTP (App Password)                                                |
+| Node Target    | v20.x (Azure)                                                            |
+| Deployment     | ZIP deploy via Azure Deployment Center                                   |
 
 > See [Infrastructure & Go-Live Configuration](#infrastructure--go-live-configuration) for the full list of external services this platform integrates with, which are required vs. optional, and step-by-step setup instructions for each.
 
@@ -154,21 +156,27 @@ This repository demonstrates a **cloud-native, microservices-aligned full-stack 
 ## Key Features
 
 ### Blockchain-Verified Referrals
+
 Medical referrals are written to a hash-chained ledger as immutable transactions. Each referral carries a blockchain transaction ID, providing a cryptographically verifiable audit trail that cannot be altered retroactively. By default this ledger lives in MongoDB (`BlockchainTransaction` collection); when Polygon credentials are configured, token-related transactions additionally settle on-chain.
 
 ### AI-Powered Analytics Dashboard
+
 TensorFlow.js models run client-side to surface predictive insights: patient outcome probabilities, referral success rates, and resource utilisation trends — all rendered in real-time without a round-trip to an ML server.
 
 ### Token Economy
+
 A smart-contract-driven token system incentivises clinicians and patients to contribute anonymised data. Tokens are earned, tracked, and redeemable — with all transactions recorded on-chain. Token standing is also factored into the AI Referral Matching score, rewarding high-quality network participants with more referrals.
 
 ### Role-Based Access Control (RBAC)
+
 Five distinct roles — `admin`, `superadmin`, `doctor`, `nurse`, `patient` — each with enforced route-level permissions. Admin operations are protected by a separate auth flow (`/api/admin/auth`).
 
 ### GraphQL Analytics API
+
 Complex nested queries (e.g., patient + referral + token history in one request) are served via GraphQL, reducing the number of round-trips for data-heavy dashboard views.
 
 ### PDF Report Generation
+
 Clinical reports are generated in-browser using jsPDF, allowing clinicians to export patient summaries, referral histories, and analytics snapshots without a server round-trip.
 
 ---
@@ -189,12 +197,12 @@ ClinicTrust AI includes a full FHIR R4 API layer that exposes internal patient a
 
 The `/api/fhir` router maps MongoDB documents to FHIR R4 JSON resources in real time — no separate FHIR datastore required. Resources include:
 
-| FHIR Resource | Maps to internal data |
-|---|---|
-| `Patient` | Patient collection |
-| `Practitioner` | User (provider roles) |
-| `ServiceRequest` | Referral collection |
-| `Observation` | Analytics / vitals |
+| FHIR Resource        | Maps to internal data   |
+| -------------------- | ----------------------- |
+| `Patient`            | Patient collection      |
+| `Practitioner`       | User (provider roles)   |
+| `ServiceRequest`     | Referral collection     |
+| `Observation`        | Analytics / vitals      |
 | `AllergyIntolerance` | Patient medical history |
 
 The FHIR capability statement (`/api/fhir/metadata`) describes supported resources, interactions, and the server's conformance level — required by ONC for certified health IT.
@@ -286,14 +294,14 @@ Clicking a suggestion auto-fills the provider field. The provider can still use 
 
 **Scoring model (100 points total)**
 
-| Dimension | Max Points | How scored |
-|---|---|---|
-| Specialty match | 30 | Exact = 30, synonym group = 22, sub-specialty = 18, no match = 0 |
-| Insurance participation | 25 | Exact plan = 25, plan family = 18, unknown = 12, out-of-network = 2 |
-| Historical acceptance rate | 20 | `acceptanceRate × 20` (0.95 → 19 pts) |
-| Availability score | 15 | `(availabilityScore / 100) × 15` |
-| Token economy standing | 10 | Tiers: ≥1000 earned = 10, ≥500 = 8, ≥200 = 6, ≥50 = 4 |
-| **Bonus modifiers** | +10 max | In-network +3, board-certified +2, telehealth for urgent +2, fast response +1–3 |
+| Dimension                  | Max Points | How scored                                                                      |
+| -------------------------- | ---------- | ------------------------------------------------------------------------------- |
+| Specialty match            | 30         | Exact = 30, synonym group = 22, sub-specialty = 18, no match = 0                |
+| Insurance participation    | 25         | Exact plan = 25, plan family = 18, unknown = 12, out-of-network = 2             |
+| Historical acceptance rate | 20         | `acceptanceRate × 20` (0.95 → 19 pts)                                           |
+| Availability score         | 15         | `(availabilityScore / 100) × 15`                                                |
+| Token economy standing     | 10         | Tiers: ≥1000 earned = 10, ≥500 = 8, ≥200 = 6, ≥50 = 4                           |
+| **Bonus modifiers**        | +10 max    | In-network +3, board-certified +2, telehealth for urgent +2, fast response +1–3 |
 
 Each match session is saved as a `MatchSession` document, recording which suggestions were shown, which was selected, and the linked referral — powering the admin analytics dashboard.
 
@@ -331,10 +339,12 @@ The provider enters the patient name, chief complaint, and selects the encounter
 The browser's **Web Speech API** (`window.SpeechRecognition`) captures real-time speech and displays a live rolling transcript — no audio file upload required. This eliminates latency and works without microphone permissions on the server.
 
 When the provider stops recording, the transcript is sent to the backend where:
+
 - **Azure Speech Services** (optional) can provide higher-accuracy server-side transcription for long or complex encounters
 - **Azure OpenAI (GPT-4)** generates the structured clinical note from the transcript in SOAP format (Subjective, Objective, Assessment, Plan)
 
 The response includes:
+
 - SOAP clinical summary
 - Referral note draft (ready to attach to a referral)
 - Suggested ICD-10 codes with descriptions
@@ -357,10 +367,10 @@ Each session stores: audio transcript, AI-generated clinical summary, referral n
 
 **Azure AI integration**
 
-| Azure Service | Environment variable | Fallback behaviour |
-|---|---|---|
+| Azure Service        | Environment variable                                                            | Fallback behaviour                                     |
+| -------------------- | ------------------------------------------------------------------------------- | ------------------------------------------------------ |
 | Azure OpenAI (GPT-4) | `AZURE_OPENAI_ENDPOINT`, `AZURE_OPENAI_API_KEY`, `AZURE_OPENAI_DEPLOYMENT_NAME` | Returns a realistic mock SOAP note and referral letter |
-| Azure Speech (STT) | `AZURE_SPEECH_KEY`, `AZURE_SPEECH_REGION` | Uses Web Speech API transcript directly |
+| Azure Speech (STT)   | `AZURE_SPEECH_KEY`, `AZURE_SPEECH_REGION`                                       | Uses Web Speech API transcript directly                |
 
 The service is designed to degrade gracefully — the full UI workflow runs without any Azure credentials, using mock data that mirrors real GPT-4 output.
 
@@ -395,23 +405,23 @@ From any open referral (`/app/referrals/:id`), providers click **Schedule Appoin
 
 The schedule renders as a filterable, searchable daily card list. Each `AppointmentCard` displays:
 
-| Field | Detail |
-|---|---|
-| Patient name and appointment type | At a glance identification |
-| Status chip | `scheduled`, `confirmed`, `checked_in`, `in_progress`, `completed`, `no_show`, `cancelled` |
-| Date, time, and duration | |
-| Referral link | Clickable badge when the appointment is linked to an open referral |
-| Action buttons | Context-sensitive — see below |
+| Field                             | Detail                                                                                     |
+| --------------------------------- | ------------------------------------------------------------------------------------------ |
+| Patient name and appointment type | At a glance identification                                                                 |
+| Status chip                       | `scheduled`, `confirmed`, `checked_in`, `in_progress`, `completed`, `no_show`, `cancelled` |
+| Date, time, and duration          |                                                                                            |
+| Referral link                     | Clickable badge when the appointment is linked to an open referral                         |
+| Action buttons                    | Context-sensitive — see below                                                              |
 
 **In-line actions on each card**
 
-| Action | Visible when | What it does |
-|---|---|---|
-| Check In | status = `scheduled` or `confirmed` | Moves appointment to `checked_in`, marks `checkedInAt` timestamp |
-| Start | status = `checked_in` | Moves to `in_progress`, marks `startedAt` |
-| Complete | status = `checked_in` or `in_progress` | Moves to `completed`, marks `completedAt`, awards tokens to the provider |
-| Remind | status = `scheduled` or `confirmed` (upcoming) | Sends a reminder notification to the patient, records `reminderSentAt` |
-| No-Show | status = any upcoming | Marks the appointment as `no_show` |
+| Action   | Visible when                                   | What it does                                                             |
+| -------- | ---------------------------------------------- | ------------------------------------------------------------------------ |
+| Check In | status = `scheduled` or `confirmed`            | Moves appointment to `checked_in`, marks `checkedInAt` timestamp         |
+| Start    | status = `checked_in`                          | Moves to `in_progress`, marks `startedAt`                                |
+| Complete | status = `checked_in` or `in_progress`         | Moves to `completed`, marks `completedAt`, awards tokens to the provider |
+| Remind   | status = `scheduled` or `confirmed` (upcoming) | Sends a reminder notification to the patient, records `reminderSentAt`   |
+| No-Show  | status = any upcoming                          | Marks the appointment as `no_show`                                       |
 
 **Token rewards on completion**
 
@@ -455,13 +465,13 @@ This is a **B2B-only feature**: the marketplace is for providers to browse, pres
 
 **Why it adds B2B value**
 
-| Problem | DTx Marketplace solution |
-|---|---|
-| Providers are unaware of vetted digital programs relevant to their patients | Curated, admin-managed catalog with evidence level badges (FDA Cleared, FDA Authorized, Peer Reviewed) |
-| No structured prescription workflow for digital programs | Provider-initiated prescriptions with patient demographics, clinical notes, and referral linkage |
-| Outcomes of digital interventions are not tracked in the platform | Prescription lifecycle (`prescribed → enrolled → active → completed / dropped`) with engagement scores and clinical notes |
-| No incentive for providers to close digital care loops | Token reward on prescription completion — same economy as appointment and referral completion |
-| Administrators have no visibility into DTx utilisation across the network | Admin analytics: prescriptions by category, completion rate, top programs, tokens awarded |
+| Problem                                                                     | DTx Marketplace solution                                                                                                  |
+| --------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
+| Providers are unaware of vetted digital programs relevant to their patients | Curated, admin-managed catalog with evidence level badges (FDA Cleared, FDA Authorized, Peer Reviewed)                    |
+| No structured prescription workflow for digital programs                    | Provider-initiated prescriptions with patient demographics, clinical notes, and referral linkage                          |
+| Outcomes of digital interventions are not tracked in the platform           | Prescription lifecycle (`prescribed → enrolled → active → completed / dropped`) with engagement scores and clinical notes |
+| No incentive for providers to close digital care loops                      | Token reward on prescription completion — same economy as appointment and referral completion                             |
+| Administrators have no visibility into DTx utilisation across the network   | Admin analytics: prescriptions by category, completion rate, top programs, tokens awarded                                 |
 
 **How it works in the application**
 
@@ -474,15 +484,15 @@ Providers navigate to `/app/dtx/marketplace`. The page presents programs grouped
 
 Each program is displayed as a `DtxProgramCard` showing:
 
-| Element | Detail |
-|---|---|
-| Evidence badge | Color-coded chip (green = FDA, blue = peer reviewed, etc.) |
-| Category color border | Instant visual categorisation |
-| Conditions treated | Chip list of target conditions |
-| Highlights | Bulleted clinical benefits |
-| Delivery format | App / Web / Both / Coaching / Hybrid |
-| Duration | Program length in weeks |
-| Token reward | Tokens the provider earns when a patient completes the program |
+| Element               | Detail                                                         |
+| --------------------- | -------------------------------------------------------------- |
+| Evidence badge        | Color-coded chip (green = FDA, blue = peer reviewed, etc.)     |
+| Category color border | Instant visual categorisation                                  |
+| Conditions treated    | Chip list of target conditions                                 |
+| Highlights            | Bulleted clinical benefits                                     |
+| Delivery format       | App / Web / Both / Coaching / Hybrid                           |
+| Duration              | Program length in weeks                                        |
+| Token reward          | Tokens the provider earns when a patient completes the program |
 
 **For providers — prescribing a program**
 
@@ -514,6 +524,7 @@ prescribed → enrolled → active → completed
 ```
 
 When transitioning to `completed`, the provider enters:
+
 - Engagement score (0–100 slider)
 - Outcome notes (required)
 
@@ -530,6 +541,7 @@ Administrators manage the DTx catalog at `/admin/dtx` (Admin Panel → DTx Marke
 **Tab 0 — Program Catalog**
 
 A full table of all programs (active and deactivated) with:
+
 - Add Program button — opens `ProgramFormDialog` with fields for name, vendor, category, evidence level, delivery format, duration, token reward, conditions list, highlights list, and contraindications
 - Edit button per row — pre-fills the same form
 - Deactivate button — soft-deactivates the program (sets `isActive: false`) so it no longer appears in provider search but historical prescriptions are preserved
@@ -541,6 +553,7 @@ Cross-provider prescription table with status and category filters, giving admin
 **Tab 2 — Analytics**
 
 Aggregate statistics including:
+
 - Active programs, total prescriptions, completion rate, total tokens awarded
 - Prescriptions by category (bar chart breakdown)
 - Top programs by prescription count
@@ -554,13 +567,13 @@ The provider Dashboard (`/app/dashboard`) surfaces a **Recent DTx Prescriptions*
 
 The catalog distinguishes five evidence tiers:
 
-| Level | Meaning |
-|---|---|
-| `fda_cleared` | FDA 510(k) clearance — clinically validated device |
-| `fda_authorized` | FDA De Novo or Breakthrough authorization |
-| `peer_reviewed` | Published in peer-reviewed literature |
-| `evidence_based` | Validated by clinical studies |
-| `clinical_study` | Active or completed clinical study |
+| Level            | Meaning                                            |
+| ---------------- | -------------------------------------------------- |
+| `fda_cleared`    | FDA 510(k) clearance — clinically validated device |
+| `fda_authorized` | FDA De Novo or Breakthrough authorization          |
+| `peer_reviewed`  | Published in peer-reviewed literature              |
+| `evidence_based` | Validated by clinical studies                      |
+| `clinical_study` | Active or completed clinical study                 |
 
 Providers see these as colour-coded chips on every card, enabling quick filtering to the level of evidence appropriate for each patient's situation.
 
@@ -681,143 +694,143 @@ VibeCoding/
 
 ### Authentication
 
-| Method | Endpoint | Auth | Description |
-|---|---|---|---|
-| POST | `/api/auth/register` | Public | Register a new user |
-| POST | `/api/auth/login` | Public | Login and receive JWT |
-| GET | `/api/auth/me` | JWT | Get current user profile |
-| POST | `/api/admin/auth/login` | Public | Admin login |
+| Method | Endpoint                | Auth   | Description              |
+| ------ | ----------------------- | ------ | ------------------------ |
+| POST   | `/api/auth/register`    | Public | Register a new user      |
+| POST   | `/api/auth/login`       | Public | Login and receive JWT    |
+| GET    | `/api/auth/me`          | JWT    | Get current user profile |
+| POST   | `/api/admin/auth/login` | Public | Admin login              |
 
 ### Patients
 
-| Method | Endpoint | Auth | Description |
-|---|---|---|---|
-| GET | `/api/patients` | JWT | List all patients |
-| POST | `/api/patients` | JWT | Create a patient record |
-| GET | `/api/patients/:id` | JWT | Get patient by ID |
-| PUT | `/api/patients/:id` | JWT | Update patient record |
+| Method | Endpoint            | Auth | Description             |
+| ------ | ------------------- | ---- | ----------------------- |
+| GET    | `/api/patients`     | JWT  | List all patients       |
+| POST   | `/api/patients`     | JWT  | Create a patient record |
+| GET    | `/api/patients/:id` | JWT  | Get patient by ID       |
+| PUT    | `/api/patients/:id` | JWT  | Update patient record   |
 
 ### Referrals
 
-| Method | Endpoint | Auth | Description |
-|---|---|---|---|
-| GET | `/api/referrals` | JWT | List referrals |
-| POST | `/api/referrals` | JWT | Create referral (writes to blockchain) |
-| GET | `/api/referrals/:id` | JWT | Get referral + blockchain receipt |
-| PUT | `/api/referrals/:id` | JWT | Update referral status |
-| GET | `/api/admin/referrals` | Admin | All referrals (admin view) |
+| Method | Endpoint               | Auth  | Description                            |
+| ------ | ---------------------- | ----- | -------------------------------------- |
+| GET    | `/api/referrals`       | JWT   | List referrals                         |
+| POST   | `/api/referrals`       | JWT   | Create referral (writes to blockchain) |
+| GET    | `/api/referrals/:id`   | JWT   | Get referral + blockchain receipt      |
+| PUT    | `/api/referrals/:id`   | JWT   | Update referral status                 |
+| GET    | `/api/admin/referrals` | Admin | All referrals (admin view)             |
 
 ### FHIR R4 API
 
-| Method | Endpoint | Auth | Description |
-|---|---|---|---|
-| GET | `/api/fhir/metadata` | Public | FHIR capability statement |
-| GET | `/api/fhir/Patient` | JWT | List patients as FHIR Patient resources |
-| GET | `/api/fhir/Patient/:id` | JWT | Single FHIR Patient resource |
-| GET | `/api/fhir/Practitioner` | JWT | List providers as FHIR Practitioner resources |
-| GET | `/api/fhir/ServiceRequest` | JWT | List referrals as FHIR ServiceRequest resources |
-| GET | `/api/fhir/Observation` | JWT | Clinical observations as FHIR resources |
-| GET | `/api/fhir/AllergyIntolerance` | JWT | Allergies as FHIR resources |
+| Method | Endpoint                       | Auth   | Description                                     |
+| ------ | ------------------------------ | ------ | ----------------------------------------------- |
+| GET    | `/api/fhir/metadata`           | Public | FHIR capability statement                       |
+| GET    | `/api/fhir/Patient`            | JWT    | List patients as FHIR Patient resources         |
+| GET    | `/api/fhir/Patient/:id`        | JWT    | Single FHIR Patient resource                    |
+| GET    | `/api/fhir/Practitioner`       | JWT    | List providers as FHIR Practitioner resources   |
+| GET    | `/api/fhir/ServiceRequest`     | JWT    | List referrals as FHIR ServiceRequest resources |
+| GET    | `/api/fhir/Observation`        | JWT    | Clinical observations as FHIR resources         |
+| GET    | `/api/fhir/AllergyIntolerance` | JWT    | Allergies as FHIR resources                     |
 
 ### Prior Authorization
 
-| Method | Endpoint | Auth | Description |
-|---|---|---|---|
-| GET | `/api/prior-auth` | JWT | List prior auth requests |
-| POST | `/api/prior-auth` | JWT | Submit a new PA request |
-| GET | `/api/prior-auth/:id` | JWT | Get PA request details |
-| PUT | `/api/prior-auth/:id` | JWT | Update PA status |
-| GET | `/api/admin/prior-auth` | Admin | All PA requests (admin view) |
-| PUT | `/api/admin/prior-auth/:id` | Admin | Admin decision (approve/deny) |
+| Method | Endpoint                    | Auth  | Description                   |
+| ------ | --------------------------- | ----- | ----------------------------- |
+| GET    | `/api/prior-auth`           | JWT   | List prior auth requests      |
+| POST   | `/api/prior-auth`           | JWT   | Submit a new PA request       |
+| GET    | `/api/prior-auth/:id`       | JWT   | Get PA request details        |
+| PUT    | `/api/prior-auth/:id`       | JWT   | Update PA status              |
+| GET    | `/api/admin/prior-auth`     | Admin | All PA requests (admin view)  |
+| PUT    | `/api/admin/prior-auth/:id` | Admin | Admin decision (approve/deny) |
 
 ### Patient Engagement
 
-| Method | Endpoint | Auth | Description |
-|---|---|---|---|
-| GET | `/api/patient-engagement` | JWT | List notifications |
-| POST | `/api/patient-engagement/send` | JWT | Send a notification |
-| GET | `/api/admin/patient-engagement` | Admin | All notifications (admin view) |
-| GET | `/api/admin/patient-engagement/templates` | Admin | Notification templates |
-| POST | `/api/admin/patient-engagement/templates` | Admin | Create a template |
-| GET | `/api/admin/patient-engagement/campaigns` | Admin | Campaigns list |
-| POST | `/api/admin/patient-engagement/campaigns` | Admin | Create a campaign |
+| Method | Endpoint                                  | Auth  | Description                    |
+| ------ | ----------------------------------------- | ----- | ------------------------------ |
+| GET    | `/api/patient-engagement`                 | JWT   | List notifications             |
+| POST   | `/api/patient-engagement/send`            | JWT   | Send a notification            |
+| GET    | `/api/admin/patient-engagement`           | Admin | All notifications (admin view) |
+| GET    | `/api/admin/patient-engagement/templates` | Admin | Notification templates         |
+| POST   | `/api/admin/patient-engagement/templates` | Admin | Create a template              |
+| GET    | `/api/admin/patient-engagement/campaigns` | Admin | Campaigns list                 |
+| POST   | `/api/admin/patient-engagement/campaigns` | Admin | Create a campaign              |
 
 ### AI Referral Matching
 
-| Method | Endpoint | Auth | Description |
-|---|---|---|---|
-| POST | `/api/referral-matching/match` | JWT | Run AI matching — returns ranked providers |
-| GET | `/api/referral-matching/providers` | JWT | List all provider match profiles |
-| GET | `/api/referral-matching/providers/:id` | JWT | Single provider profile |
-| PUT | `/api/referral-matching/providers/:id` | Admin | Update provider profile |
-| GET | `/api/referral-matching/stats` | JWT | Aggregate matching analytics |
-| GET | `/api/referral-matching/sessions` | JWT | Match session history |
-| POST | `/api/referral-matching/sessions/:id/select` | JWT | Record provider selection |
+| Method | Endpoint                                     | Auth  | Description                                |
+| ------ | -------------------------------------------- | ----- | ------------------------------------------ |
+| POST   | `/api/referral-matching/match`               | JWT   | Run AI matching — returns ranked providers |
+| GET    | `/api/referral-matching/providers`           | JWT   | List all provider match profiles           |
+| GET    | `/api/referral-matching/providers/:id`       | JWT   | Single provider profile                    |
+| PUT    | `/api/referral-matching/providers/:id`       | Admin | Update provider profile                    |
+| GET    | `/api/referral-matching/stats`               | JWT   | Aggregate matching analytics               |
+| GET    | `/api/referral-matching/sessions`            | JWT   | Match session history                      |
+| POST   | `/api/referral-matching/sessions/:id/select` | JWT   | Record provider selection                  |
 
 ### Ambient Clinical Intelligence
 
-| Method | Endpoint | Auth | Description |
-|---|---|---|---|
-| GET | `/api/ambient-sessions` | JWT | List provider's sessions |
-| POST | `/api/ambient-sessions` | JWT | Create session + trigger AI processing |
-| GET | `/api/ambient-sessions/stats` | JWT | Provider session stats |
-| GET | `/api/ambient-sessions/:id` | JWT | Session details |
-| PUT | `/api/ambient-sessions/:id/review` | JWT | Approve or reject a session |
-| PUT | `/api/ambient-sessions/:id` | JWT | Update session |
-| POST | `/api/ambient-sessions/:id/reprocess` | JWT | Re-run AI on existing transcript |
-| DELETE | `/api/ambient-sessions/:id` | JWT | Delete a draft session |
-| GET | `/api/admin/ambient-sessions` | Admin | All sessions (admin view) |
-| GET | `/api/admin/ambient-sessions/stats` | Admin | Platform-wide session analytics |
-| PUT | `/api/admin/ambient-sessions/:id` | Admin | Admin update |
+| Method | Endpoint                              | Auth  | Description                            |
+| ------ | ------------------------------------- | ----- | -------------------------------------- |
+| GET    | `/api/ambient-sessions`               | JWT   | List provider's sessions               |
+| POST   | `/api/ambient-sessions`               | JWT   | Create session + trigger AI processing |
+| GET    | `/api/ambient-sessions/stats`         | JWT   | Provider session stats                 |
+| GET    | `/api/ambient-sessions/:id`           | JWT   | Session details                        |
+| PUT    | `/api/ambient-sessions/:id/review`    | JWT   | Approve or reject a session            |
+| PUT    | `/api/ambient-sessions/:id`           | JWT   | Update session                         |
+| POST   | `/api/ambient-sessions/:id/reprocess` | JWT   | Re-run AI on existing transcript       |
+| DELETE | `/api/ambient-sessions/:id`           | JWT   | Delete a draft session                 |
+| GET    | `/api/admin/ambient-sessions`         | Admin | All sessions (admin view)              |
+| GET    | `/api/admin/ambient-sessions/stats`   | Admin | Platform-wide session analytics        |
+| PUT    | `/api/admin/ambient-sessions/:id`     | Admin | Admin update                           |
 
 ### Appointments & Scheduling
 
-| Method | Endpoint | Auth | Description |
-|---|---|---|---|
-| GET | `/api/appointments` | JWT | List provider's appointments |
-| POST | `/api/appointments` | JWT | Book an appointment |
-| GET | `/api/appointments/:id` | JWT | Get appointment details |
-| PUT | `/api/appointments/:id` | JWT | Update appointment (status, notes) |
-| POST | `/api/appointments/:id/reminder` | JWT | Send patient reminder |
-| GET | `/api/schedules/:providerId/waitlist` | JWT | Get provider waitlist |
-| GET | `/api/admin/appointments` | Admin | All appointments (admin view) |
-| GET | `/api/admin/appointments/provider-utilization` | Admin | Provider fill rate and utilization metrics |
+| Method | Endpoint                                       | Auth  | Description                                |
+| ------ | ---------------------------------------------- | ----- | ------------------------------------------ |
+| GET    | `/api/appointments`                            | JWT   | List provider's appointments               |
+| POST   | `/api/appointments`                            | JWT   | Book an appointment                        |
+| GET    | `/api/appointments/:id`                        | JWT   | Get appointment details                    |
+| PUT    | `/api/appointments/:id`                        | JWT   | Update appointment (status, notes)         |
+| POST   | `/api/appointments/:id/reminder`               | JWT   | Send patient reminder                      |
+| GET    | `/api/schedules/:providerId/waitlist`          | JWT   | Get provider waitlist                      |
+| GET    | `/api/admin/appointments`                      | Admin | All appointments (admin view)              |
+| GET    | `/api/admin/appointments/provider-utilization` | Admin | Provider fill rate and utilization metrics |
 
 ### Digital Therapeutics (DTx)
 
-| Method | Endpoint | Auth | Description |
-|---|---|---|---|
-| GET | `/api/dtx/programs` | JWT | Browse active DTx catalog (category / evidence / search filters) |
-| GET | `/api/dtx/programs/:id` | JWT | Get program details |
-| POST | `/api/dtx/prescriptions` | JWT | Create a DTx prescription |
-| GET | `/api/dtx/prescriptions` | JWT | List provider's prescriptions |
-| PUT | `/api/dtx/prescriptions/:id/status` | JWT | Update prescription status + capture outcomes (awards tokens on completion) |
-| GET | `/api/admin/dtx/stats` | Admin | Platform-wide DTx aggregate statistics |
-| GET | `/api/admin/dtx/programs` | Admin | Full catalog (active + deactivated) |
-| POST | `/api/admin/dtx/programs` | Admin | Add a program to the catalog |
-| PUT | `/api/admin/dtx/programs/:id` | Admin | Edit a program |
-| DELETE | `/api/admin/dtx/programs/:id` | Admin | Deactivate a program (soft delete) |
-| GET | `/api/admin/dtx/prescriptions` | Admin | All prescriptions across providers |
+| Method | Endpoint                            | Auth  | Description                                                                 |
+| ------ | ----------------------------------- | ----- | --------------------------------------------------------------------------- |
+| GET    | `/api/dtx/programs`                 | JWT   | Browse active DTx catalog (category / evidence / search filters)            |
+| GET    | `/api/dtx/programs/:id`             | JWT   | Get program details                                                         |
+| POST   | `/api/dtx/prescriptions`            | JWT   | Create a DTx prescription                                                   |
+| GET    | `/api/dtx/prescriptions`            | JWT   | List provider's prescriptions                                               |
+| PUT    | `/api/dtx/prescriptions/:id/status` | JWT   | Update prescription status + capture outcomes (awards tokens on completion) |
+| GET    | `/api/admin/dtx/stats`              | Admin | Platform-wide DTx aggregate statistics                                      |
+| GET    | `/api/admin/dtx/programs`           | Admin | Full catalog (active + deactivated)                                         |
+| POST   | `/api/admin/dtx/programs`           | Admin | Add a program to the catalog                                                |
+| PUT    | `/api/admin/dtx/programs/:id`       | Admin | Edit a program                                                              |
+| DELETE | `/api/admin/dtx/programs/:id`       | Admin | Deactivate a program (soft delete)                                          |
+| GET    | `/api/admin/dtx/prescriptions`      | Admin | All prescriptions across providers                                          |
 
 ### Tokens
 
-| Method | Endpoint | Auth | Description |
-|---|---|---|---|
-| GET | `/api/tokens` | JWT | Get token balance and history |
-| POST | `/api/tokens/earn` | JWT | Earn tokens for data contribution |
-| POST | `/api/tokens/redeem` | JWT | Redeem tokens |
+| Method | Endpoint             | Auth | Description                       |
+| ------ | -------------------- | ---- | --------------------------------- |
+| GET    | `/api/tokens`        | JWT  | Get token balance and history     |
+| POST   | `/api/tokens/earn`   | JWT  | Earn tokens for data contribution |
+| POST   | `/api/tokens/redeem` | JWT  | Redeem tokens                     |
 
 ### Analytics
 
-| Method | Endpoint | Auth | Description |
-|---|---|---|---|
-| GET | `/api/analytics` | JWT | Aggregated analytics data |
-| GET | `/api/dashboard` | JWT | Dashboard summary metrics |
+| Method | Endpoint         | Auth | Description               |
+| ------ | ---------------- | ---- | ------------------------- |
+| GET    | `/api/analytics` | JWT  | Aggregated analytics data |
+| GET    | `/api/dashboard` | JWT  | Dashboard summary metrics |
 
 ### GraphQL
 
-| Endpoint | Description |
-|---|---|
+| Endpoint        | Description                                                                                                     |
+| --------------- | --------------------------------------------------------------------------------------------------------------- |
 | `POST /graphql` | GraphQL query endpoint — supports complex nested data queries across patients, referrals, tokens, and analytics |
 
 ---
@@ -826,11 +839,11 @@ VibeCoding/
 
 ### Prerequisites
 
-| Tool | Minimum Version | Check Command |
-|---|---|---|
-| Node.js | v16.x | `node --version` |
-| npm | v8.x | `npm --version` |
-| Git | Any | `git --version` |
+| Tool    | Minimum Version | Check Command    |
+| ------- | --------------- | ---------------- |
+| Node.js | v16.x           | `node --version` |
+| npm     | v8.x            | `npm --version`  |
+| Git     | Any             | `git --version`  |
 
 > **MongoDB**: The application connects to a MongoDB Atlas cluster by default. No local MongoDB installation is required. If unreachable, the server automatically falls back to [Synthetic Data Mode](#synthetic-data-mode).
 
@@ -852,6 +865,7 @@ npm run install-all
 ```
 
 This executes:
+
 1. `npm install` — installs backend packages
 2. `cd client && npm install` — installs frontend packages (React, MUI, Redux, TensorFlow.js, etc.)
 
@@ -932,30 +946,30 @@ npm run client
 
 ### Step 6 — Open the application
 
-| Service | URL |
-|---|---|
-| React Frontend | http://localhost:3000 |
-| REST API | http://localhost:5000/api |
-| FHIR R4 API | http://localhost:5000/api/fhir/metadata |
-| GraphQL Playground | http://localhost:5000/graphql |
-| Admin Portal | http://localhost:3000/admin/login |
+| Service            | URL                                     |
+| ------------------ | --------------------------------------- |
+| React Frontend     | http://localhost:3000                   |
+| REST API           | http://localhost:5000/api               |
+| FHIR R4 API        | http://localhost:5000/api/fhir/metadata |
+| GraphQL Playground | http://localhost:5000/graphql           |
+| Admin Portal       | http://localhost:3000/admin/login       |
 
 ---
 
 ### npm Scripts Reference
 
-| Script | Command | Description |
-|---|---|---|
-| `npm run start-dev` | `node start-dev.js` | Start both servers (recommended) |
-| `npm run dev` | `concurrently ...` | Start both via concurrently directly |
-| `npm run server` | `nodemon server/index.js` | Backend only with hot reload |
-| `npm run client` | `cd client && npm start` | Frontend only |
-| `npm run install-all` | `npm install && cd client && npm install` | Install all dependencies |
-| `npm run build` | `cd client && npm run build` | Build React for production |
-| `npm run populate_db` | `node populate_db.js` | Drop and reseed all MongoDB collections with demo data |
-| `npm run contract:compile` | `npx hardhat compile` | Compile the `ClinicToken` Solidity contract |
-| `npm run contract:deploy:local` | `npx hardhat run contracts/scripts/deploy.js --network hardhat` | Deploy to an in-memory Hardhat network (testing only) |
-| `npm run contract:deploy:amoy` | `npx hardhat run contracts/scripts/deploy.js --network amoy` | Deploy `ClinicToken` to the Polygon Amoy testnet |
+| Script                          | Command                                                         | Description                                            |
+| ------------------------------- | --------------------------------------------------------------- | ------------------------------------------------------ |
+| `npm run start-dev`             | `node start-dev.js`                                             | Start both servers (recommended)                       |
+| `npm run dev`                   | `concurrently ...`                                              | Start both via concurrently directly                   |
+| `npm run server`                | `nodemon server/index.js`                                       | Backend only with hot reload                           |
+| `npm run client`                | `cd client && npm start`                                        | Frontend only                                          |
+| `npm run install-all`           | `npm install && cd client && npm install`                       | Install all dependencies                               |
+| `npm run build`                 | `cd client && npm run build`                                    | Build React for production                             |
+| `npm run populate_db`           | `node populate_db.js`                                           | Drop and reseed all MongoDB collections with demo data |
+| `npm run contract:compile`      | `npx hardhat compile`                                           | Compile the `ClinicToken` Solidity contract            |
+| `npm run contract:deploy:local` | `npx hardhat run contracts/scripts/deploy.js --network hardhat` | Deploy to an in-memory Hardhat network (testing only)  |
+| `npm run contract:deploy:amoy`  | `npx hardhat run contracts/scripts/deploy.js --network amoy`    | Deploy `ClinicToken` to the Polygon Amoy testnet       |
 
 > **Note:** `blockchain:start` / `blockchain:stop` scripts referencing Hyperledger Fabric (`./startFabric.sh`) appear in some older package.json snapshots but the `blockchain/` directory and Fabric scripts do not exist in this codebase — the platform's actual blockchain layer is Polygon + the MongoDB ledger described below. If you see these scripts in `package.json`, they're dead references and can be ignored/removed.
 
@@ -999,12 +1013,14 @@ Server starts
 ### Console output
 
 **Live database:**
+
 ```
 ✅  MongoDB connected — running in live database mode
 🚀  Server running on port 5000 [LIVE DB]
 ```
 
 **Synthetic mode:**
+
 ```
 ⚠️  MongoDB unavailable (Connection timeout after 8 s)
 🔄  Starting in SYNTHETIC DATA mode — all data is in-memory.
@@ -1015,12 +1031,12 @@ Server starts
 
 ### Limitations
 
-| Feature | Synthetic mode |
-|---|---|
+| Feature                          | Synthetic mode                           |
+| -------------------------------- | ---------------------------------------- |
 | Data persistence across restarts | Not supported — resets on server restart |
-| GraphQL endpoint | Returns a 503 with a helpful message |
-| Blockchain file writes | Skipped |
-| Real Azure AI calls | Not made — mock responses returned |
+| GraphQL endpoint                 | Returns a 503 with a helpful message     |
+| Blockchain file writes           | Skipped                                  |
+| Real Azure AI calls              | Not made — mock responses returned       |
 
 > **Synthetic mode is intended for local development and demos only.**
 
@@ -1032,37 +1048,37 @@ All accounts share the password: **`Demo1234!`**
 
 ### Provider accounts
 
-| Name | Email | Role | Organization | Token Balance |
-|---|---|---|---|---|
-| Dr. John Smith | `john.smith@clinictrustai.com` | doctor | Metro Heart Institute | 350 |
-| Dr. Michael Chen | `michael.chen@clinictrustai.com` | doctor | Neuroscience Medical Center | 420 |
-| Dr. Robert Williams | `robert.williams@clinictrustai.com` | doctor | Westside Family Medicine | 290 |
-| Nurse Sarah Johnson | `sarah.johnson@clinictrustai.com` | provider | Community Care Hospital | 175 |
+| Name                | Email                               | Role     | Organization                | Token Balance |
+| ------------------- | ----------------------------------- | -------- | --------------------------- | ------------- |
+| Dr. John Smith      | `john.smith@clinictrustai.com`      | doctor   | Metro Heart Institute       | 350           |
+| Dr. Michael Chen    | `michael.chen@clinictrustai.com`    | doctor   | Neuroscience Medical Center | 420           |
+| Dr. Robert Williams | `robert.williams@clinictrustai.com` | doctor   | Westside Family Medicine    | 290           |
+| Nurse Sarah Johnson | `sarah.johnson@clinictrustai.com`   | provider | Community Care Hospital     | 175           |
 
 ### Admin account
 
-| Name | Email | Role |
-|---|---|---|
+| Name       | Email                     | Role  |
+| ---------- | ------------------------- | ----- |
 | Admin User | `admin@clinictrustai.com` | admin |
 
 > Admin logs in at `/admin/login`. Providers log in at the standard login page.
 
 ### Pre-seeded data (synthetic mode)
 
-| Collection | Records |
-|---|---|
-| Users | 5 (1 admin, 4 providers) |
-| Patients | 5 |
-| Referrals | 3 |
-| Prior Auth requests | 10 (covering all statuses) |
-| Patient notifications | 12 |
-| Notification templates | 6 |
-| Campaigns | 3 |
-| Ambient sessions | 10 (all statuses and urgencies) |
-| Provider match profiles | 15 (across 14 specialties) |
-| Match sessions | 5 |
-| DTx programs | 10 (across mental health, metabolic, musculoskeletal, cardiovascular, behavioral) |
-| DTx prescriptions | 7 (spanning all lifecycle statuses) |
+| Collection              | Records                                                                           |
+| ----------------------- | --------------------------------------------------------------------------------- |
+| Users                   | 5 (1 admin, 4 providers)                                                          |
+| Patients                | 5                                                                                 |
+| Referrals               | 3                                                                                 |
+| Prior Auth requests     | 10 (covering all statuses)                                                        |
+| Patient notifications   | 12                                                                                |
+| Notification templates  | 6                                                                                 |
+| Campaigns               | 3                                                                                 |
+| Ambient sessions        | 10 (all statuses and urgencies)                                                   |
+| Provider match profiles | 15 (across 14 specialties)                                                        |
+| Match sessions          | 5                                                                                 |
+| DTx programs            | 10 (across mental health, metabolic, musculoskeletal, cardiovascular, behavioral) |
+| DTx prescriptions       | 7 (spanning all lifecycle statuses)                                               |
 
 ---
 
@@ -1100,23 +1116,23 @@ Produces `clinictrust-ai-azure.zip`.
 
 ### Step 3 — Configure Azure App Service settings
 
-| Application Setting | Value |
-|---|---|
-| `WEBSITE_NODE_DEFAULT_VERSION` | `20.x` |
-| `NODE_ENV` | `production` |
-| `PORT` | `8080` |
-| `MONGO_URI` | MongoDB Atlas connection string |
-| `JWT_SECRET` | Strong random secret |
-| `JWT_EXPIRE` | `30d` |
-| `AZURE_OPENAI_ENDPOINT` | Azure OpenAI resource endpoint |
-| `AZURE_OPENAI_API_KEY` | Azure OpenAI key |
-| `AZURE_OPENAI_DEPLOYMENT_NAME` | GPT-4 deployment name |
-| `AZURE_SPEECH_KEY` | Azure Speech key |
-| `AZURE_SPEECH_REGION` | Azure region (e.g. `eastus`) |
-| `GMAIL_USER` / `GMAIL_APP_PASSWORD` | Only if you want real transactional email sent (otherwise emails are logged, not sent) |
+| Application Setting                                       | Value                                                                                              |
+| --------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
+| `WEBSITE_NODE_DEFAULT_VERSION`                            | `20.x`                                                                                             |
+| `NODE_ENV`                                                | `production`                                                                                       |
+| `PORT`                                                    | `8080`                                                                                             |
+| `MONGO_URI`                                               | MongoDB Atlas connection string                                                                    |
+| `JWT_SECRET`                                              | Strong random secret                                                                               |
+| `JWT_EXPIRE`                                              | `30d`                                                                                              |
+| `AZURE_OPENAI_ENDPOINT`                                   | Azure OpenAI resource endpoint                                                                     |
+| `AZURE_OPENAI_API_KEY`                                    | Azure OpenAI key                                                                                   |
+| `AZURE_OPENAI_DEPLOYMENT_NAME`                            | GPT-4 deployment name                                                                              |
+| `AZURE_SPEECH_KEY`                                        | Azure Speech key                                                                                   |
+| `AZURE_SPEECH_REGION`                                     | Azure region (e.g. `eastus`)                                                                       |
+| `GMAIL_USER` / `GMAIL_APP_PASSWORD`                       | Only if you want real transactional email sent (otherwise emails are logged, not sent)             |
 | `POLYGON_RPC_URL` / `CLINICTOKEN_ADDRESS` / `PRIVATE_KEY` | Only if you want token mint/burn to settle on real Polygon (otherwise MongoDB-ledger mode is used) |
-| `WALLET_MASTER_MNEMONIC` / `WALLET_ENCRYPTION_KEY` | Only if you want deterministic, recoverable provider wallets |
-| `SCM_DO_BUILD_DURING_DEPLOYMENT` | `true` |
+| `WALLET_MASTER_MNEMONIC` / `WALLET_ENCRYPTION_KEY`        | Only if you want deterministic, recoverable provider wallets                                       |
+| `SCM_DO_BUILD_DURING_DEPLOYMENT`                          | `true`                                                                                             |
 
 > Full explanation of every setting — including what happens if you omit it — is in **[Infrastructure & Go-Live Configuration](#infrastructure--go-live-configuration)**.
 
@@ -1127,6 +1143,7 @@ Produces `clinictrust-ai-azure.zip`.
 **Via Portal:** App Service → Deployment Center → Manual → ZIP Deploy → upload `clinictrust-ai-azure.zip`
 
 **Via CLI:**
+
 ```bash
 az webapp deploy \
   --resource-group <your-resource-group> \
@@ -1144,6 +1161,7 @@ az webapp log tail --resource-group <rg> --name <app-name>
 ```
 
 Expected:
+
 ```
 ✅  MongoDB connected — running in live database mode
 🚀  Server running on port 8080 [LIVE DB]
@@ -1157,17 +1175,17 @@ Every environment variable in this app is read via `process.env` with a graceful
 
 ### Quick reference — what's required vs optional
 
-| # | Service | Required for go-live? | Fallback if not configured |
-|---|---|---|---|
-| 1 | [MongoDB](#1-mongodb-primary-database-required) | **Yes** | Synthetic in-memory data (dev/demo only — resets on restart) |
-| 2 | [JWT secrets](#2-jwt-secrets-required) | **Yes** | Server refuses to start |
-| 3 | [Azure OpenAI](#3-azure-openai-clinical-ai-and-llm-optional) | No | Heuristic rule-based analysis + canned templates |
-| 4 | [Azure Speech](#4-azure-speech-services-speech-to-text-optional) | No | Browser Web Speech API transcript only (no error, no code change either way) |
-| 5 | [Gmail SMTP](#5-email-gmail-smtp-recommended) | Recommended | Emails are logged to console, never sent |
-| 6 | [Polygon blockchain](#6-polygon-blockchain-token-ledger-optional) | No | MongoDB-backed hash-chained ledger (fully verifiable, no crypto needed) |
-| 7 | [HD wallet / encryption key](#7-hd-wallet-generation-optional) | No | Random, non-deterministic wallet address per user |
-| 8 | [File storage](#8-file-storage-local-disk-s3-or-azure-blob-optional) | No | Local disk (`server/uploads/`) — works, but not safe for multi-instance production |
-| 9 | [SMS / Email / Push notifications](#9-sms-email-and-push-notifications-twilio-sendgrid-azure-notification-hubs-optional) | No | Console-log stub — real SDKs installed and wired, no code change needed either way |
+| #   | Service                                                                                                                  | Required for go-live? | Fallback if not configured                                                         |
+| --- | ------------------------------------------------------------------------------------------------------------------------ | --------------------- | ---------------------------------------------------------------------------------- |
+| 1   | [MongoDB](#1-mongodb-primary-database-required)                                                                          | **Yes**               | Synthetic in-memory data (dev/demo only — resets on restart)                       |
+| 2   | [JWT secrets](#2-jwt-secrets-required)                                                                                   | **Yes**               | Server refuses to start                                                            |
+| 3   | [Azure OpenAI](#3-azure-openai-clinical-ai-and-llm-optional)                                                             | No                    | Heuristic rule-based analysis + canned templates                                   |
+| 4   | [Azure Speech](#4-azure-speech-services-speech-to-text-optional)                                                         | No                    | Browser Web Speech API transcript only (no error, no code change either way)       |
+| 5   | [Gmail SMTP](#5-email-gmail-smtp-recommended)                                                                            | Recommended           | Emails are logged to console, never sent                                           |
+| 6   | [Polygon blockchain](#6-polygon-blockchain-token-ledger-optional)                                                        | No                    | MongoDB-backed hash-chained ledger (fully verifiable, no crypto needed)            |
+| 7   | [HD wallet / encryption key](#7-hd-wallet-generation-optional)                                                           | No                    | Random, non-deterministic wallet address per user                                  |
+| 8   | [File storage](#8-file-storage-local-disk-s3-or-azure-blob-optional)                                                     | No                    | Local disk (`server/uploads/`) — works, but not safe for multi-instance production |
+| 9   | [SMS / Email / Push notifications](#9-sms-email-and-push-notifications-twilio-sendgrid-azure-notification-hubs-optional) | No                    | Console-log stub — real SDKs installed and wired, no code change needed either way |
 
 ---
 
@@ -1175,11 +1193,12 @@ Every environment variable in this app is read via `process.env` with a graceful
 
 Every piece of operational data (users, patients, referrals, tokens, KYC, prior auth, ambient sessions, blockchain ledger, etc.) lives in MongoDB.
 
-| Variable | Required | Description |
-|---|---|---|
-| `MONGO_URI` | **Yes** | Full MongoDB connection string, e.g. `mongodb+srv://<user>:<password>@<cluster>.mongodb.net/<dbname>?retryWrites=true&w=majority` |
+| Variable    | Required | Description                                                                                                                       |
+| ----------- | -------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| `MONGO_URI` | **Yes**  | Full MongoDB connection string, e.g. `mongodb+srv://<user>:<password>@<cluster>.mongodb.net/<dbname>?retryWrites=true&w=majority` |
 
 **How to configure:**
+
 1. Create a free/paid cluster at [MongoDB Atlas](https://www.mongodb.com/cloud/atlas).
 2. Create a database user and copy the connection string.
 3. Whitelist your server's outbound IP (or `0.0.0.0/0` for quick testing — restrict this before go-live).
@@ -1192,14 +1211,15 @@ Every piece of operational data (users, patients, referrals, tokens, KYC, prior 
 
 ### 2. JWT secrets (Required)
 
-| Variable | Required | Description |
-|---|---|---|
-| `JWT_SECRET` | **Yes** | Signs access tokens |
-| `JWT_REFRESH_SECRET` | **Yes** | Signs refresh tokens |
-| `JWT_RESET_SECRET` | **Yes** | Signs password-reset tokens |
-| `JWT_EXPIRE` | No (default `30d`) | Access token lifetime |
+| Variable             | Required           | Description                 |
+| -------------------- | ------------------ | --------------------------- |
+| `JWT_SECRET`         | **Yes**            | Signs access tokens         |
+| `JWT_REFRESH_SECRET` | **Yes**            | Signs refresh tokens        |
+| `JWT_RESET_SECRET`   | **Yes**            | Signs password-reset tokens |
+| `JWT_EXPIRE`         | No (default `30d`) | Access token lifetime       |
 
 **How to configure:** generate three distinct random secrets — never reuse one across the three variables:
+
 ```bash
 node -e "require('crypto').randomBytes(64).toString('hex')"
 ```
@@ -1212,14 +1232,15 @@ node -e "require('crypto').randomBytes(64).toString('hex')"
 
 Powers AI-generated content across three features: **Prior Authorization** (recommendation + appeal letter drafting), **Ambient Clinical Intelligence** (SOAP note generation from transcripts), and referral summaries.
 
-| Variable | Required | Description |
-|---|---|---|
-| `AZURE_OPENAI_ENDPOINT` | No | Your Azure OpenAI resource endpoint, e.g. `https://<resource-name>.openai.azure.com` |
-| `AZURE_OPENAI_KEY` (or `AZURE_OPENAI_API_KEY`) | No | API key from the Azure OpenAI resource — both names are accepted |
-| `AZURE_OPENAI_DEPLOYMENT` (or `AZURE_OPENAI_DEPLOYMENT_NAME`) | No (default `gpt-4o`) | Name of the model deployment you created in Azure OpenAI Studio |
-| `AZURE_OPENAI_API_VERSION` | No (default `2024-05-01-preview`) | API version string |
+| Variable                                                      | Required                          | Description                                                                          |
+| ------------------------------------------------------------- | --------------------------------- | ------------------------------------------------------------------------------------ |
+| `AZURE_OPENAI_ENDPOINT`                                       | No                                | Your Azure OpenAI resource endpoint, e.g. `https://<resource-name>.openai.azure.com` |
+| `AZURE_OPENAI_KEY` (or `AZURE_OPENAI_API_KEY`)                | No                                | API key from the Azure OpenAI resource — both names are accepted                     |
+| `AZURE_OPENAI_DEPLOYMENT` (or `AZURE_OPENAI_DEPLOYMENT_NAME`) | No (default `gpt-4o`)             | Name of the model deployment you created in Azure OpenAI Studio                      |
+| `AZURE_OPENAI_API_VERSION`                                    | No (default `2024-05-01-preview`) | API version string                                                                   |
 
 **How to configure:**
+
 1. Create an **Azure OpenAI** resource in the Azure Portal (requires an approved Azure OpenAI access request on new subscriptions).
 2. In **Azure OpenAI Studio**, deploy a chat model (e.g. `gpt-4o`) and note the **deployment name**.
 3. Copy the resource **Endpoint** and **Key** from the resource's "Keys and Endpoint" blade.
@@ -1233,14 +1254,14 @@ Powers AI-generated content across three features: **Prior Authorization** (reco
 
 Used by **Ambient Clinical Intelligence** for a higher-accuracy, server-side final transcript of the recorded encounter — layered on top of the browser's live Web Speech API captions, not a replacement for them.
 
-| Variable | Required | Description |
-|---|---|---|
-| `AZURE_SPEECH_KEY` | No | Key from your Azure Speech resource |
-| `AZURE_SPEECH_REGION` | No | Azure region the resource is deployed in, e.g. `eastus` |
+| Variable              | Required | Description                                             |
+| --------------------- | -------- | ------------------------------------------------------- |
+| `AZURE_SPEECH_KEY`    | No       | Key from your Azure Speech resource                     |
+| `AZURE_SPEECH_REGION` | No       | Azure region the resource is deployed in, e.g. `eastus` |
 
 **How to configure:** create an **Azure AI Services (Speech)** resource in the Azure Portal, copy the key + region from "Keys and Endpoint", set both variables. No npm install and no code change required — the server calls the Azure Speech-to-Text REST API directly over HTTPS (not the native Speech SDK), so there's no GStreamer/native-codec dependency to install either.
 
-**How it works:** while recording, the browser captures both a live Web Speech API transcript (shown in real time) *and* a raw audio clip via `MediaRecorder`. When the provider stops recording, the client uploads that clip to `POST /api/ambient-sessions/transcribe`, which calls `ambientIntelligenceService.transcribeAudio()`. If Azure Speech is configured, the clip is sent to Azure's REST recognition endpoint and the resulting transcript **replaces** the Web Speech draft (usually more accurate, especially for medical terminology) before the provider submits for AI analysis.
+**How it works:** while recording, the browser captures both a live Web Speech API transcript (shown in real time) _and_ a raw audio clip via `MediaRecorder`. When the provider stops recording, the client uploads that clip to `POST /api/ambient-sessions/transcribe`, which calls `ambientIntelligenceService.transcribeAudio()`. If Azure Speech is configured, the clip is sent to Azure's REST recognition endpoint and the resulting transcript **replaces** the Web Speech draft (usually more accurate, especially for medical terminology) before the provider submits for AI analysis.
 
 **What happens if you skip it:** `transcribeAudio()` immediately returns `{ stub: true, transcript: null }` without ever calling Azure, and the client keeps the Web Speech API transcript unchanged. No error, no extra latency beyond one fast round-trip, no different behavior visible to the user — the feature is fully functional either way.
 
@@ -1250,17 +1271,18 @@ Used by **Ambient Clinical Intelligence** for a higher-accuracy, server-side fin
 
 Used for password reset links, KYC status emails, referral notifications, and appointment reminders (`server/services/emailService.js`).
 
-| Variable | Required | Description |
-|---|---|---|
-| `GMAIL_USER` | Recommended | The Gmail address to send from |
-| `GMAIL_APP_PASSWORD` | Recommended | A 16-character **App Password**, not your normal Gmail password |
-| `EMAIL_VERIFICATION_SECRET` | Recommended | Separate JWT secret used specifically for email-verification links |
-| `CLIENT_URL` | No (default `http://localhost:3000`) | Base URL used to build links inside emails |
-| `EMAIL_DOMAIN` | No (default `clinictrustai.com`) | Domain used to build the `noreply@` sender address |
-| `COMPANY_ADDRESS` | No | Physical address included in email footers for CAN-SPAM compliance |
-| `ADMIN_NOTIFICATION_EMAIL` | No | Address that receives internal admin alert emails |
+| Variable                    | Required                             | Description                                                        |
+| --------------------------- | ------------------------------------ | ------------------------------------------------------------------ |
+| `GMAIL_USER`                | Recommended                          | The Gmail address to send from                                     |
+| `GMAIL_APP_PASSWORD`        | Recommended                          | A 16-character **App Password**, not your normal Gmail password    |
+| `EMAIL_VERIFICATION_SECRET` | Recommended                          | Separate JWT secret used specifically for email-verification links |
+| `CLIENT_URL`                | No (default `http://localhost:3000`) | Base URL used to build links inside emails                         |
+| `EMAIL_DOMAIN`              | No (default `clinictrustai.com`)     | Domain used to build the `noreply@` sender address                 |
+| `COMPANY_ADDRESS`           | No                                   | Physical address included in email footers for CAN-SPAM compliance |
+| `ADMIN_NOTIFICATION_EMAIL`  | No                                   | Address that receives internal admin alert emails                  |
 
 **How to configure:**
+
 1. Enable 2-Step Verification on the sending Gmail account.
 2. Generate an App Password at [myaccount.google.com/apppasswords](https://myaccount.google.com/apppasswords).
 3. Set `GMAIL_USER` to the full Gmail address and `GMAIL_APP_PASSWORD` to the generated 16-character password (no spaces).
@@ -1273,20 +1295,21 @@ Used for password reset links, KYC status emails, referral notifications, and ap
 
 Backs the token economy (earn/transfer/redeem) and referral audit trail. By default, everything runs in **MongoDB ledger mode** — a hash-chained, tamper-evident `BlockchainTransaction` collection (each record embeds the previous record's hash, mirroring how a real blockchain links blocks). Setting the three variables below switches token mint/burn operations to real on-chain transactions on Polygon.
 
-| Variable | Required | Description |
-|---|---|---|
-| `POLYGON_RPC_URL` | No | JSON-RPC endpoint, e.g. Amoy testnet `https://rpc-amoy.polygon.technology` |
-| `CLINICTOKEN_ADDRESS` | No | Deployed `ClinicToken` ERC-20 contract address |
-| `PRIVATE_KEY` | No — **keep secret** | Private key of the platform's minting wallet (needs MATIC/POL for gas) |
-| `POLYGON_NETWORK` | No (default `amoy`) | Human-readable network name shown in the admin UI |
-| `POLYGONSCAN_API_KEY` | No | Used only at contract-deploy time, for PolygonScan source verification |
+| Variable              | Required             | Description                                                                |
+| --------------------- | -------------------- | -------------------------------------------------------------------------- |
+| `POLYGON_RPC_URL`     | No                   | JSON-RPC endpoint, e.g. Amoy testnet `https://rpc-amoy.polygon.technology` |
+| `CLINICTOKEN_ADDRESS` | No                   | Deployed `ClinicToken` ERC-20 contract address                             |
+| `PRIVATE_KEY`         | No — **keep secret** | Private key of the platform's minting wallet (needs MATIC/POL for gas)     |
+| `POLYGON_NETWORK`     | No (default `amoy`)  | Human-readable network name shown in the admin UI                          |
+| `POLYGONSCAN_API_KEY` | No                   | Used only at contract-deploy time, for PolygonScan source verification     |
 
 **How to configure (testnet):**
+
 1. Get a free Amoy testnet RPC URL (the default public one works for light use, or use Alchemy/Infura for reliability).
 2. Get testnet MATIC from a Polygon Amoy faucet for your deployer wallet.
 3. Deploy the contract: `npm run contract:deploy:amoy` (uses `hardhat.config.js`, which reads a separate `DEPLOYER_PRIVATE_KEY` env var — not the same as the runtime `PRIVATE_KEY` above).
 4. Copy the deployed contract address into `CLINICTOKEN_ADDRESS`.
-5. Fund the *runtime* minting wallet (the address for `PRIVATE_KEY`) with a small amount of MATIC for gas.
+5. Fund the _runtime_ minting wallet (the address for `PRIVATE_KEY`) with a small amount of MATIC for gas.
 6. Set `POLYGON_RPC_URL`, `CLINICTOKEN_ADDRESS`, `PRIVATE_KEY`, `POLYGON_NETWORK=amoy`.
 
 **For mainnet go-live:** repeat with `npm run contract:deploy:local`/a mainnet Hardhat network config, real MATIC/POL for gas, and set `POLYGON_NETWORK=polygon`. Treat `PRIVATE_KEY` as a production secret (Azure Key Vault, not plain app settings, is recommended).
@@ -1301,18 +1324,20 @@ Backs the token economy (earn/transfer/redeem) and referral audit trail. By defa
 
 Each provider gets a blockchain wallet address (shown on their Profile page and used for on-chain token transfers).
 
-| Variable | Required | Description |
-|---|---|---|
-| `WALLET_MASTER_MNEMONIC` | No | A BIP-39 mnemonic phrase; each user's wallet is deterministically derived from it |
-| `WALLET_ENCRYPTION_KEY` | No | A 32-character key used to AES-256-GCM encrypt derived private keys before they're stored |
+| Variable                 | Required | Description                                                                               |
+| ------------------------ | -------- | ----------------------------------------------------------------------------------------- |
+| `WALLET_MASTER_MNEMONIC` | No       | A BIP-39 mnemonic phrase; each user's wallet is deterministically derived from it         |
+| `WALLET_ENCRYPTION_KEY`  | No       | A 32-character key used to AES-256-GCM encrypt derived private keys before they're stored |
 
 **How to configure:**
+
 ```bash
 # Generate a mnemonic
 node -e "const { ethers } = require('ethers'); console.log(ethers.Wallet.createRandom().mnemonic.phrase)"
 # Generate an encryption key
 node -e "require('crypto').randomBytes(32).toString('hex')"
 ```
+
 Store both as long-lived secrets — losing `WALLET_MASTER_MNEMONIC` means existing derived wallets can no longer be recomputed; losing `WALLET_ENCRYPTION_KEY` means stored private keys can no longer be decrypted.
 
 **What happens if you skip it:** each user gets a random (non-deterministic, non-recoverable) wallet address instead — fine for demos, not appropriate for a real token economy holding any value.
@@ -1325,21 +1350,23 @@ KYC verification documents and profile avatars are handled by a storage abstract
 
 **Precedence when more than one is configured:** S3 > Azure Blob > local disk.
 
-| Variable | Provider | Description |
-|---|---|---|
-| `AWS_ACCESS_KEY_ID` | AWS S3 | IAM access key with `s3:PutObject`/`GetObject`/`DeleteObject`/`HeadObject` on the target bucket |
-| `AWS_SECRET_ACCESS_KEY` | AWS S3 | Secret for the above key |
-| `AWS_S3_BUCKET` | AWS S3 | Bucket name (KYC docs and avatars both go here, under `kyc/` and `avatars/` prefixes) |
-| `AWS_REGION` | AWS S3 | No (default `us-east-1`) — bucket's region |
-| `AZURE_STORAGE_CONNECTION_STRING` | Azure Blob | Full connection string from the Storage Account's "Access keys" blade |
-| `AZURE_STORAGE_CONTAINER` | Azure Blob | Blob container name |
+| Variable                          | Provider   | Description                                                                                     |
+| --------------------------------- | ---------- | ----------------------------------------------------------------------------------------------- |
+| `AWS_ACCESS_KEY_ID`               | AWS S3     | IAM access key with `s3:PutObject`/`GetObject`/`DeleteObject`/`HeadObject` on the target bucket |
+| `AWS_SECRET_ACCESS_KEY`           | AWS S3     | Secret for the above key                                                                        |
+| `AWS_S3_BUCKET`                   | AWS S3     | Bucket name (KYC docs and avatars both go here, under `kyc/` and `avatars/` prefixes)           |
+| `AWS_REGION`                      | AWS S3     | No (default `us-east-1`) — bucket's region                                                      |
+| `AZURE_STORAGE_CONNECTION_STRING` | Azure Blob | Full connection string from the Storage Account's "Access keys" blade                           |
+| `AZURE_STORAGE_CONTAINER`         | Azure Blob | Blob container name                                                                             |
 
 **How to configure (S3):**
+
 1. Create an S3 bucket. For avatars to render as `<img>` tags, either enable public read on the `avatars/` prefix or put a CloudFront distribution in front of the bucket. KYC docs under `kyc/` should stay private — they're only ever served through the authenticated `GET /api/admin/kyc/:id/document` route, which streams the object server-side rather than exposing a public URL.
 2. Create an IAM user/role scoped to that bucket with `PutObject`, `GetObject`, `DeleteObject`, `HeadObject`.
 3. Set `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_S3_BUCKET`, `AWS_REGION`.
 
 **How to configure (Azure Blob):**
+
 1. Create a Storage Account and a container (private access level is fine — same reasoning as above).
 2. Copy a connection string from the account's "Access keys" blade.
 3. Set `AZURE_STORAGE_CONNECTION_STRING` and `AZURE_STORAGE_CONTAINER`.
@@ -1354,19 +1381,19 @@ KYC verification documents and profile avatars are handled by a storage abstract
 
 `server/services/patientEngagementService.js` is a unified multi-channel notification interface (email / SMS / push) backed by real provider SDK calls: **Twilio** (SMS), **SendGrid** (email — an alternative to the Gmail SMTP option in section 5, useful for higher volume), and **Azure Notification Hubs** (push). The `twilio`, `@sendgrid/mail`, and `@azure/notification-hubs` packages are already installed and required by the code — no npm install or code change needed.
 
-| Variable | Provider | Description |
-|---|---|---|
-| `TWILIO_ACCOUNT_SID` | Twilio (SMS) | Account SID (starts with `AC…`) |
-| `TWILIO_AUTH_TOKEN` | Twilio (SMS) | Auth token |
-| `TWILIO_PHONE_NUMBER` | Twilio (SMS) | Sending number, E.164 format e.g. `+15551234567` |
-| `SENDGRID_API_KEY` | SendGrid (email) | API key (starts with `SG.`) |
-| `SENDGRID_FROM_EMAIL` | SendGrid (email) | Verified sender address |
-| `AZURE_NOTIFICATION_HUB_CONNECTION_STRING` | Azure Notification Hubs (push) | Full connection string from the Azure Portal |
-| `AZURE_NOTIFICATION_HUB_NAME` | Azure Notification Hubs (push) | Notification Hub resource name |
+| Variable                                   | Provider                       | Description                                      |
+| ------------------------------------------ | ------------------------------ | ------------------------------------------------ |
+| `TWILIO_ACCOUNT_SID`                       | Twilio (SMS)                   | Account SID (starts with `AC…`)                  |
+| `TWILIO_AUTH_TOKEN`                        | Twilio (SMS)                   | Auth token                                       |
+| `TWILIO_PHONE_NUMBER`                      | Twilio (SMS)                   | Sending number, E.164 format e.g. `+15551234567` |
+| `SENDGRID_API_KEY`                         | SendGrid (email)               | API key (starts with `SG.`)                      |
+| `SENDGRID_FROM_EMAIL`                      | SendGrid (email)               | Verified sender address                          |
+| `AZURE_NOTIFICATION_HUB_CONNECTION_STRING` | Azure Notification Hubs (push) | Full connection string from the Azure Portal     |
+| `AZURE_NOTIFICATION_HUB_NAME`              | Azure Notification Hubs (push) | Notification Hub resource name                   |
 
 **What happens if you skip it:** each function (`sendEmail`, `sendSMS`, `sendPushNotification`) checks its provider's key env var first; if it's absent, it logs a `[...STUB]` message and returns `{ success: true, stub: true }` immediately — the provider SDK is never even `require()`'d. No error, no partial state, no fake-success-while-configured trap. Set the variables above and it starts sending for real on the very next call; unset them and it's back to a harmless stub — no code change either way.
 
-**One caveat on push notifications specifically:** Azure Notification Hubs delivers to *registered device installations* (a mobile app that has registered itself with the hub and a matching notification template). This web app has no mobile client doing that registration today, so `sendPushNotification()` is correctly implemented and will call Azure for real, but there's nothing on the receiving end to actually display a push notification to yet — it's ready for when a mobile client exists.
+**One caveat on push notifications specifically:** Azure Notification Hubs delivers to _registered device installations_ (a mobile app that has registered itself with the hub and a matching notification template). This web app has no mobile client doing that registration today, so `sendPushNotification()` is correctly implemented and will call Azure for real, but there's nothing on the receiving end to actually display a push notification to yet — it's ready for when a mobile client exists.
 
 ---
 
@@ -1408,21 +1435,21 @@ KYC verification documents and profile avatars are handled by a storage abstract
 
 ## Security Design
 
-| Layer | Mechanism |
-|---|---|
-| Authentication | JWT (stateless Bearer tokens) — no server-side session state |
-| Password storage | bcrypt with salt rounds — no plaintext or reversible hashing |
-| Authorization | `protect` validates JWT; `authorize(...roles)` enforces RBAC per route |
-| Admin separation | Dedicated `/api/admin/auth` route and `Admin` model — isolated from standard user auth |
-| Transport | HTTPS enforced by Azure App Service TLS termination |
-| Secrets management | Environment variables only — never committed to source control |
+| Layer                | Mechanism                                                                                                                                                                                   |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Authentication       | JWT (stateless Bearer tokens) — no server-side session state                                                                                                                                |
+| Password storage     | bcrypt with salt rounds — no plaintext or reversible hashing                                                                                                                                |
+| Authorization        | `protect` validates JWT; `authorize(...roles)` enforces RBAC per route                                                                                                                      |
+| Admin separation     | Dedicated `/api/admin/auth` route and `Admin` model — isolated from standard user auth                                                                                                      |
+| Transport            | HTTPS enforced by Azure App Service TLS termination                                                                                                                                         |
+| Secrets management   | Environment variables only — never committed to source control                                                                                                                              |
 | Blockchain integrity | Hash-chained MongoDB ledger (`BlockchainTransaction`) provides cryptographic tamper-evidence for referral/token records; Polygon settlement adds public-chain verifiability when configured |
-| Wallet key storage | Private keys derived from `WALLET_MASTER_MNEMONIC` are AES-256-GCM encrypted at rest with `WALLET_ENCRYPTION_KEY` before being written to disk/DB |
-| FHIR access control | All FHIR endpoints require JWT; audit logs capture every EHI access event |
-| AI data handling | Ambient session transcripts and clinical notes are stored per-patient with provider-scoped access — providers can only access their own sessions |
-| Error handling | Centralised Express error middleware — stack traces never exposed to clients |
-| Input trust boundary | Validation at route layer; unhandled async errors caught by `async.js` wrapper |
-| Rate limiting | Auth endpoints are rate-limited (20 req / 15 min window) to prevent credential stuffing |
+| Wallet key storage   | Private keys derived from `WALLET_MASTER_MNEMONIC` are AES-256-GCM encrypted at rest with `WALLET_ENCRYPTION_KEY` before being written to disk/DB                                           |
+| FHIR access control  | All FHIR endpoints require JWT; audit logs capture every EHI access event                                                                                                                   |
+| AI data handling     | Ambient session transcripts and clinical notes are stored per-patient with provider-scoped access — providers can only access their own sessions                                            |
+| Error handling       | Centralised Express error middleware — stack traces never exposed to clients                                                                                                                |
+| Input trust boundary | Validation at route layer; unhandled async errors caught by `async.js` wrapper                                                                                                              |
+| Rate limiting        | Auth endpoints are rate-limited (20 req / 15 min window) to prevent credential stuffing                                                                                                     |
 
 ---
 

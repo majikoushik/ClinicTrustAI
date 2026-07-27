@@ -13,6 +13,7 @@
     "get_data_from_db": "node get_data_from_db.js",
     "install-all": "npm install && cd client && npm install",
     "build": "cd client && npm run build",
+    "build:server": "node -e \"console.log('No server build step required')\"",
     "blockchain:start": "cd blockchain && ./startFabric.sh",
     "blockchain:stop": "cd blockchain && ./stopFabric.sh",
     "contract:compile": "npx hardhat compile",
@@ -28,6 +29,9 @@
   ],
   "author": "",
   "license": "MIT",
+  "engines": {
+    "node": "20.x"
+  },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.1077.0",
     "@azure/notification-hubs": "^2.1.0",
