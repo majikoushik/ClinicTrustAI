@@ -1,9 +1,17 @@
 const mongoose = require('mongoose');
 
 const predictiveAlertSchema = new mongoose.Schema({
-  patientId: { type: mongoose.Schema.Types.ObjectId, ref: 'Patient', required: true },
+  // Patient and User models use application-generated string identifiers
+  // (for example, "ml-patient-993" and "user-5"). Keep all references in
+  // this model aligned with those schemas so Mongoose does not cast them as
+  // ObjectIds.
+  _id: {
+    type: String,
+    default: () => `predictive-alert-${new mongoose.Types.ObjectId()}`,
+  },
+  patientId: { type: String, ref: 'Patient', required: true },
   patientName: { type: String },
-  providerId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+  providerId: { type: String, ref: 'User', required: true },
   type: {
     type: String,
     enum: ['readmission_risk', 'care_gap', 'medication_adherence', 'risk_score_increase', 'overdue_followup', 'lab_trend'],
@@ -20,7 +28,7 @@ const predictiveAlertSchema = new mongoose.Schema({
   daysOverdue: { type: Number },        // for overdue_followup alerts
   status: { type: String, enum: ['active', 'acknowledged', 'resolved', 'dismissed'], default: 'active' },
   acknowledgedAt: { type: Date },
-  acknowledgedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+  acknowledgedBy: { type: String, ref: 'User' },
   resolvedAt: { type: Date },
   dismissedAt: { type: Date },
   dismissedReason: { type: String },

@@ -1,6 +1,13 @@
 const mongoose = require('mongoose');
 
 const ReferralSchema = new mongoose.Schema({
+  // Referral data uses application-generated string IDs (for example,
+  // "referral-1"). Declaring the path prevents Mongoose from trying to cast
+  // those IDs to ObjectId and hydrating them as undefined.
+  _id: {
+    type: String,
+    default: () => `referral-${new mongoose.Types.ObjectId()}`
+  },
   patient: {
     type: String,
     ref: 'Patient',

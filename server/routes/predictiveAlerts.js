@@ -31,7 +31,7 @@ router.get('/', protect, async (req, res) => {
 router.get('/summary', protect, async (req, res) => {
   try {
     const counts = await PredictiveAlert.aggregate([
-      { $match: { providerId: require('mongoose').Types.ObjectId(req.user.id), status: 'active' } },
+      { $match: { providerId: req.user.id, status: 'active' } },
       { $group: { _id: '$severity', count: { $sum: 1 } } },
     ]);
     const summary = { critical: 0, high: 0, medium: 0, low: 0, total: 0 };

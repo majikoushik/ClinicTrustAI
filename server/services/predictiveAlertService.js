@@ -114,8 +114,8 @@ function alertExpiry() {
  * Returns true when an active alert of the same type already exists for this
  * patient + provider combination, so we do not create a duplicate.
  *
- * @param {string|ObjectId} providerId
- * @param {string|ObjectId} patientId
+ * @param {string}          providerId
+ * @param {string}          patientId
  * @param {string}          type  — PredictiveAlert.type enum value
  * @returns {Promise<boolean>}
  */
@@ -384,7 +384,7 @@ async function buildPreviousScoreMap(providerId, patients) {
  * Returns a small set of hardcoded sample alerts suitable for demos or when
  * the database is unavailable.
  *
- * @param {string|ObjectId} providerId
+ * @param {string} providerId
  * @returns {PredictiveAlert[]}  unsaved plain objects
  */
 function getSyntheticAlerts(providerId) {
