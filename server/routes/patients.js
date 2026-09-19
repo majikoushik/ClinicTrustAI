@@ -314,6 +314,18 @@ router.put('/:id', protect, ehiAudit('Patient', 'UPDATE'), async (req, res) => {
       { $set: updateFields },
       { new: true, runValidators: true }
     );
+	
+	// Phase 2: emit Kafka event so ML consumer can re-score in real time (fire-and-forget)
+    setImmediate(() => {
+      try {
+        const { emitPatientEvent } = require('../kafka/producer');
+        const { EVENT_TYPES }      = require('../kafka/events');
+        emitPatientEvent(patient._id.toString(), EVENT_TYPES.PATIENT_UPDATED, {
+          riskScore: patient.riskScore,
+          patientId: patient.patientId,
+        });
+      } catch (_) {}
+    });
 
     res.status(200).json({ success: true, data: patient });
   } catch (error) {

@@ -212,6 +212,19 @@ router.post('/', async (req, res) => {
       organizationName,
       createdBy: 'provider'
     });
+	
+	// Phase 2: emit Kafka event for ML consumer (fire-and-forget)
+    setImmediate(() => {
+      try {
+        const { emitAppointmentEvent } = require('../kafka/producer');
+        const { EVENT_TYPES }          = require('../kafka/events');
+        emitAppointmentEvent(appointment._id.toString(), EVENT_TYPES.APPOINTMENT_CREATED, {
+          patientId:       (patientId || req.user._id)?.toString(),
+          providerId:      providerId?.toString(),
+          appointmentType: appointmentType,
+        });
+      } catch (_) {}
+    });
 
     // Move linked referral to accepted state
     if (linkedReferralId) {

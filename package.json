@@ -10,6 +10,8 @@
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "start-dev": "node start-dev.js",
     "populate_db": "node populate_db.js",
+	  "populate_db_ml": "node populate_db_ml.js",
+    "populate_db_all": "node populate_db.js && node populate_db_ml.js",
     "get_data_from_db": "node get_data_from_db.js",
     "install-all": "npm install && cd client && npm install",
     "build": "cd client && npm run build",

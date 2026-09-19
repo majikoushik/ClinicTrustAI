@@ -1,5 +1,9 @@
 'use strict';
 
+// Gap 5 fix: load AIConfig so thresholds are runtime-configurable
+// (set via admin UI or auto-tuned by ml/monitoring/alert_calibration.py)
+const AIConfig = require('../models/AIConfig');
+
 /**
  * Predictive Alert Service
  *
@@ -17,25 +21,51 @@
  *   generateAlertsForAllProviders()         → { providers, totalCreated, totalSkipped, errors }
  */
 
-const mongoose        = require('mongoose');
-const Patient         = require('../models/Patient');
+const mongoose = require('mongoose');
+const Patient = require('../models/Patient');
 const PredictiveAlert = require('../models/PredictiveAlert');
 const AnalyticsSnapshot = require('../models/AnalyticsSnapshot');
-const User            = require('../models/User');
-const logger          = require('../utils/logger');
+const User = require('../models/User');
+const logger = require('../utils/logger');
 
 // ── Thresholds ────────────────────────────────────────────────────────────────
+// Defaults match the previous hard-coded values.
+// At runtime these are overridden by AIConfig values set in the admin UI
+// or auto-tuned by ml/monitoring/alert_calibration.py.
 
-const THRESHOLDS = {
-  READMISSION_CRITICAL : 85,   // riskScore >= 85 → critical
-  READMISSION_HIGH     : 75,   // riskScore >= 75 → high  (lower bound)
-  RISK_DELTA_HIGH      : 15,   // point increase to trigger risk_score_increase
-  CARE_GAP_DAYS        : 60,   // days without a visit
-  CARE_GAP_RISK_MIN    : 50,   // only flag care gap if riskScore >= this
-  CARE_GAP_HIGH_RISK   : 70,   // care_gap severity high if riskScore also >= this
-  MED_ADHERENCE_DAYS   : 120,  // days without a visit while on active meds
-  ALERT_TTL_DAYS       : 30,   // alerts expire after this many days
+const THRESHOLD_DEFAULTS = {
+  READMISSION_CRITICAL: 85,   // riskScore >= 85 → critical
+  READMISSION_HIGH: 75,   // riskScore >= 75 → high  (lower bound)
+  RISK_DELTA_HIGH: 15,   // point increase to trigger risk_score_increase
+  CARE_GAP_DAYS: 60,   // days without a visit
+  CARE_GAP_RISK_MIN: 50,   // only flag care gap if riskScore >= this
+  CARE_GAP_HIGH_RISK: 70,   // care_gap severity high if riskScore also >= this
+  MED_ADHERENCE_DAYS: 120,  // days without a visit while on active meds
+  ALERT_TTL_DAYS: 30,   // alerts expire after this many days
 };
+
+// Resolved at call time from AIConfig (with fallback to defaults above).
+// This is a simple async getter so every alert generation run gets fresh values.
+async function getThresholds() {
+  try {
+    const [highRisk, criticalRisk, alertOnIncrease] = await Promise.all([
+      AIConfig.get('riskScore.highRiskThreshold'),
+      AIConfig.get('riskScore.criticalRiskThreshold'),
+      AIConfig.get('riskScore.alertOnIncrease'),
+    ]);
+    return {
+      ...THRESHOLD_DEFAULTS,
+      READMISSION_HIGH: highRisk ?? THRESHOLD_DEFAULTS.READMISSION_HIGH,
+      READMISSION_CRITICAL: criticalRisk ?? THRESHOLD_DEFAULTS.READMISSION_CRITICAL,
+      RISK_DELTA_HIGH: alertOnIncrease ?? THRESHOLD_DEFAULTS.RISK_DELTA_HIGH,
+    };
+  } catch {
+    return THRESHOLD_DEFAULTS;
+  }
+}
+
+// Keep the static export for backward-compatibility with existing unit tests
+const THRESHOLDS = THRESHOLD_DEFAULTS;
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
@@ -114,34 +144,34 @@ async function deduplicateAlert(providerId, patientId, type) {
  * Builds a readmission_risk alert when riskScore >= READMISSION_HIGH.
  * Returns a plain alert object or null.
  */
-function buildReadmissionAlert(patient, providerId) {
+function buildReadmissionAlert(patient, providerId, thresholds = THRESHOLDS) {
   const score = patient.riskScore;
-  if (score == null || score < THRESHOLDS.READMISSION_HIGH) return null;
+  if (score == null || score < thresholds.READMISSION_HIGH) return null;
 
-  const isCritical = score >= THRESHOLDS.READMISSION_CRITICAL;
-  const severity   = isCritical ? 'critical' : 'high';
+  const isCritical = score >= thresholds.READMISSION_CRITICAL;
+  const severity = isCritical ? 'critical' : 'high';
 
   return {
-    patientId:   patient._id,
+    patientId: patient._id,
     patientName: patient.name,
     providerId,
-    type:        'readmission_risk',
+    type: 'readmission_risk',
     severity,
-    title:       `High Readmission Risk — ${patient.name}`,
+    title: `High Readmission Risk — ${patient.name}`,
     description: isCritical
       ? `${patient.name} has a critical readmission risk score of ${score}/100. ` +
-        `This level indicates an immediate risk of unplanned readmission based on ` +
-        `age, active conditions, medications, and care history.`
+      `This level indicates an immediate risk of unplanned readmission based on ` +
+      `age, active conditions, medications, and care history.`
       : `${patient.name} has an elevated readmission risk score of ${score}/100. ` +
-        `The score reflects chronic condition burden, polypharmacy, and recent ` +
-        `gaps in care.`,
+      `The score reflects chronic condition burden, polypharmacy, and recent ` +
+      `gaps in care.`,
     recommendation: isCritical
       ? `Schedule an urgent follow-up within 48 hours. Review all active medications ` +
-        `and confirm a discharge care plan is in place.`
+      `and confirm a discharge care plan is in place.`
       : `Schedule a follow-up visit within 7 days. Review care plan and confirm ` +
-        `medication reconciliation.`,
-    riskScore:  score,
-    expiresAt:  alertExpiry(),
+      `medication reconciliation.`,
+    riskScore: score,
+    expiresAt: alertExpiry(),
   };
 }
 
@@ -150,31 +180,31 @@ function buildReadmissionAlert(patient, providerId) {
  * at least RISK_DELTA_HIGH points higher than their score in the previous snapshot.
  * Returns a plain alert object or null.
  */
-function buildRiskIncreaseAlert(patient, previousScore, providerId) {
+function buildRiskIncreaseAlert(patient, previousScore, providerId, thresholds = THRESHOLDS) {
   const current = patient.riskScore;
   if (current == null || previousScore == null) return null;
 
   const delta = current - previousScore;
-  if (delta < THRESHOLDS.RISK_DELTA_HIGH) return null;
+  if (delta < thresholds.RISK_DELTA_HIGH) return null;
 
   return {
-    patientId:         patient._id,
-    patientName:       patient.name,
+    patientId: patient._id,
+    patientName: patient.name,
     providerId,
-    type:              'risk_score_increase',
-    severity:          'high',
-    title:             `Risk Score Increase — ${patient.name}`,
-    description:       `${patient.name}'s risk score has increased by ${delta} points ` +
-                       `(from ${previousScore} to ${current}) since the last assessment. ` +
-                       `A rapid rise in risk score often signals worsening chronic ` +
-                       `conditions, new medications, or a widening gap in care.`,
-    recommendation:    `Review recent clinical notes and medication changes. ` +
-                       `Consider scheduling a comprehensive visit within 14 days to ` +
-                       `identify the driving factors behind this increase.`,
-    riskScore:         current,
+    type: 'risk_score_increase',
+    severity: 'high',
+    title: `Risk Score Increase — ${patient.name}`,
+    description: `${patient.name}'s risk score has increased by ${delta} points ` +
+      `(from ${previousScore} to ${current}) since the last assessment. ` +
+      `A rapid rise in risk score often signals worsening chronic ` +
+      `conditions, new medications, or a widening gap in care.`,
+    recommendation: `Review recent clinical notes and medication changes. ` +
+      `Consider scheduling a comprehensive visit within 14 days to ` +
+      `identify the driving factors behind this increase.`,
+    riskScore: current,
     previousRiskScore: previousScore,
-    deltaScore:        delta,
-    expiresAt:         alertExpiry(),
+    deltaScore: delta,
+    expiresAt: alertExpiry(),
   };
 }
 
@@ -183,38 +213,38 @@ function buildRiskIncreaseAlert(patient, previousScore, providerId) {
  * CARE_GAP_DAYS days and their riskScore >= CARE_GAP_RISK_MIN.
  * Returns a plain alert object or null.
  */
-function buildCareGapAlert(patient, providerId) {
+function buildCareGapAlert(patient, providerId, thresholds = THRESHOLDS) {
   const score = patient.riskScore;
-  if (score == null || score < THRESHOLDS.CARE_GAP_RISK_MIN) return null;
+  if (score == null || score < thresholds.CARE_GAP_RISK_MIN) return null;
 
   const lastVisit = latestVisitDate(patient);
-  const gap       = daysSince(lastVisit);
+  const gap = daysSince(lastVisit);
 
-  if (gap < THRESHOLDS.CARE_GAP_DAYS) return null;
+  if (gap < thresholds.CARE_GAP_DAYS) return null;
 
   const gapDisplay = lastVisit
     ? `${Math.round(gap)} days (last visit: ${new Date(lastVisit).toLocaleDateString()})`
     : 'no visit on record';
 
-  const severity = score >= THRESHOLDS.CARE_GAP_HIGH_RISK ? 'high' : 'medium';
+  const severity = score >= thresholds.CARE_GAP_HIGH_RISK ? 'high' : 'medium';
 
   return {
-    patientId:           patient._id,
-    patientName:         patient.name,
+    patientId: patient._id,
+    patientName: patient.name,
     providerId,
-    type:                'care_gap',
+    type: 'care_gap',
     severity,
-    title:               `Care Gap Detected — ${patient.name}`,
-    description:         `${patient.name} (risk score ${score}/100) has not had a ` +
-                         `recorded visit in ${gapDisplay}. Patients with elevated ` +
-                         `risk scores and extended care gaps have significantly higher ` +
-                         `rates of avoidable hospitalisation.`,
-    recommendation:      `Reach out to ${patient.name} to schedule a care visit. ` +
-                         `If contact cannot be made within 5 business days, escalate ` +
-                         `to a care coordinator for outreach.`,
-    riskScore:           score,
-    daysSinceLastVisit:  Math.round(gap),
-    expiresAt:           alertExpiry(),
+    title: `Care Gap Detected — ${patient.name}`,
+    description: `${patient.name} (risk score ${score}/100) has not had a ` +
+      `recorded visit in ${gapDisplay}. Patients with elevated ` +
+      `risk scores and extended care gaps have significantly higher ` +
+      `rates of avoidable hospitalisation.`,
+    recommendation: `Reach out to ${patient.name} to schedule a care visit. ` +
+      `If contact cannot be made within 5 business days, escalate ` +
+      `to a care coordinator for outreach.`,
+    riskScore: score,
+    daysSinceLastVisit: Math.round(gap),
+    expiresAt: alertExpiry(),
   };
 }
 
@@ -228,7 +258,7 @@ function buildMedAdherenceAlert(patient, providerId) {
   if (!meds.length) return null;
 
   const lastVisit = latestVisitDate(patient);
-  const gap       = daysSince(lastVisit);
+  const gap = daysSince(lastVisit);
 
   if (gap < THRESHOLDS.MED_ADHERENCE_DAYS) return null;
 
@@ -242,21 +272,21 @@ function buildMedAdherenceAlert(patient, providerId) {
     : `${meds.length} active medication${meds.length !== 1 ? 's' : ''}`;
 
   return {
-    patientId:           patient._id,
-    patientName:         patient.name,
+    patientId: patient._id,
+    patientName: patient.name,
     providerId,
-    type:                'medication_adherence',
-    severity:            'medium',
-    title:               `Medication Adherence Concern — ${patient.name}`,
-    description:         `${patient.name} has ${medLabel} but has not had a ` +
-                         `recorded visit in ${gapDisplay}. Without regular monitoring, ` +
-                         `medication effectiveness and safety cannot be confirmed.`,
-    recommendation:      `Contact the patient to verify they are taking medications ` +
-                         `as prescribed. Schedule a medication review visit within ` +
-                         `30 days to assess adherence and check for adverse effects.`,
-    riskScore:           patient.riskScore ?? null,
-    daysSinceLastVisit:  isFinite(gap) ? Math.round(gap) : null,
-    expiresAt:           alertExpiry(),
+    type: 'medication_adherence',
+    severity: 'medium',
+    title: `Medication Adherence Concern — ${patient.name}`,
+    description: `${patient.name} has ${medLabel} but has not had a ` +
+      `recorded visit in ${gapDisplay}. Without regular monitoring, ` +
+      `medication effectiveness and safety cannot be confirmed.`,
+    recommendation: `Contact the patient to verify they are taking medications ` +
+      `as prescribed. Schedule a medication review visit within ` +
+      `30 days to assess adherence and check for adverse effects.`,
+    riskScore: patient.riskScore ?? null,
+    daysSinceLastVisit: isFinite(gap) ? Math.round(gap) : null,
+    expiresAt: alertExpiry(),
   };
 }
 
@@ -363,80 +393,80 @@ function getSyntheticAlerts(providerId) {
 
   return [
     {
-      patientId:   new mongoose.Types.ObjectId(),
+      patientId: new mongoose.Types.ObjectId(),
       patientName: 'Jane Smith',
       providerId,
-      type:        'readmission_risk',
-      severity:    'critical',
-      title:       'High Readmission Risk — Jane Smith',
+      type: 'readmission_risk',
+      severity: 'critical',
+      title: 'High Readmission Risk — Jane Smith',
       description: 'Jane Smith has a critical readmission risk score of 88/100. ' +
-                   'The score reflects advanced age, CHF diagnosis, and four active ' +
-                   'medications with no visit in the past 45 days.',
+        'The score reflects advanced age, CHF diagnosis, and four active ' +
+        'medications with no visit in the past 45 days.',
       recommendation: 'Schedule an urgent follow-up within 48 hours. Review all active ' +
-                      'medications and confirm a discharge care plan is in place.',
-      riskScore:   88,
+        'medications and confirm a discharge care plan is in place.',
+      riskScore: 88,
       generatedAt: now,
-      expiresAt:   expiry,
-      status:      'active',
-      _synthetic:  true,
+      expiresAt: expiry,
+      status: 'active',
+      _synthetic: true,
     },
     {
-      patientId:   new mongoose.Types.ObjectId(),
+      patientId: new mongoose.Types.ObjectId(),
       patientName: 'Robert Johnson',
       providerId,
-      type:        'risk_score_increase',
-      severity:    'high',
-      title:       'Risk Score Increase — Robert Johnson',
+      type: 'risk_score_increase',
+      severity: 'high',
+      title: 'Risk Score Increase — Robert Johnson',
       description: "Robert Johnson's risk score has increased by 22 points (from 48 to 70) " +
-                   'since the last assessment. A new diabetes diagnosis and three additional ' +
-                   'medications are the primary drivers.',
+        'since the last assessment. A new diabetes diagnosis and three additional ' +
+        'medications are the primary drivers.',
       recommendation: 'Review recent clinical notes and medication changes. Schedule a ' +
-                      'comprehensive visit within 14 days.',
-      riskScore:         70,
+        'comprehensive visit within 14 days.',
+      riskScore: 70,
       previousRiskScore: 48,
-      deltaScore:        22,
+      deltaScore: 22,
       generatedAt: now,
-      expiresAt:   expiry,
-      status:      'active',
-      _synthetic:  true,
+      expiresAt: expiry,
+      status: 'active',
+      _synthetic: true,
     },
     {
-      patientId:   new mongoose.Types.ObjectId(),
+      patientId: new mongoose.Types.ObjectId(),
       patientName: 'Maria Garcia',
       providerId,
-      type:        'care_gap',
-      severity:    'high',
-      title:       'Care Gap Detected — Maria Garcia',
+      type: 'care_gap',
+      severity: 'high',
+      title: 'Care Gap Detected — Maria Garcia',
       description: 'Maria Garcia (risk score 72/100) has not had a recorded visit in ' +
-                   '93 days. Patients with elevated risk scores and extended care gaps ' +
-                   'have significantly higher rates of avoidable hospitalisation.',
+        '93 days. Patients with elevated risk scores and extended care gaps ' +
+        'have significantly higher rates of avoidable hospitalisation.',
       recommendation: 'Reach out to Maria Garcia to schedule a care visit. If contact ' +
-                      'cannot be made within 5 business days, escalate to a care coordinator.',
-      riskScore:          72,
+        'cannot be made within 5 business days, escalate to a care coordinator.',
+      riskScore: 72,
       daysSinceLastVisit: 93,
       generatedAt: now,
-      expiresAt:   expiry,
-      status:      'active',
-      _synthetic:  true,
+      expiresAt: expiry,
+      status: 'active',
+      _synthetic: true,
     },
     {
-      patientId:   new mongoose.Types.ObjectId(),
+      patientId: new mongoose.Types.ObjectId(),
       patientName: 'David Chen',
       providerId,
-      type:        'medication_adherence',
-      severity:    'medium',
-      title:       'Medication Adherence Concern — David Chen',
+      type: 'medication_adherence',
+      severity: 'medium',
+      title: 'Medication Adherence Concern — David Chen',
       description: 'David Chen has active medications (metformin, lisinopril, atorvastatin) ' +
-                   'but has not had a recorded visit in 135 days. Without regular monitoring, ' +
-                   'medication effectiveness and safety cannot be confirmed.',
+        'but has not had a recorded visit in 135 days. Without regular monitoring, ' +
+        'medication effectiveness and safety cannot be confirmed.',
       recommendation: 'Contact the patient to verify they are taking medications as prescribed. ' +
-                      'Schedule a medication review visit within 30 days.',
-      riskScore:          58,
+        'Schedule a medication review visit within 30 days.',
+      riskScore: 58,
       daysSinceLastVisit: 135,
       generatedAt: now,
-      expiresAt:   expiry,
-      status:      'active',
-      _synthetic:  true,
+      expiresAt: expiry,
+      status: 'active',
+      _synthetic: true,
     },
   ];
 }
@@ -464,13 +494,16 @@ async function generateAlertsForProvider(providerId, options = {}) {
   // ── Synthetic mode ──────────────────────────────────────────────────────────
   if (options.synthetic) {
     logger.info('[PredictiveAlert] Returning synthetic alerts', { providerId });
-    result.alerts  = getSyntheticAlerts(providerId);
+    result.alerts = getSyntheticAlerts(providerId);
     result.created = result.alerts.length;
     return result;
   }
 
   // ── DB mode ─────────────────────────────────────────────────────────────────
   try {
+    // Resolve live thresholds from AIConfig (falls back to defaults if DB unavailable)
+    const liveThresholds = await getThresholds();
+
     const patients = await Patient.find({ primaryProvider: String(providerId) }).lean();
 
     if (!patients.length) {
@@ -481,6 +514,10 @@ async function generateAlertsForProvider(providerId, options = {}) {
     logger.info('[PredictiveAlert] Evaluating patients', {
       providerId,
       patientCount: patients.length,
+      thresholds: {
+        readmissionHigh: liveThresholds.READMISSION_HIGH,
+        careGapDays: liveThresholds.CARE_GAP_DAYS,
+      },
     });
 
     // Build previous-score map for risk_score_increase detection
@@ -493,7 +530,7 @@ async function generateAlertsForProvider(providerId, options = {}) {
 
       // ── 1. READMISSION_RISK ───────────────────────────────────────────────
       try {
-        const alert = buildReadmissionAlert(patient, providerId);
+        const alert = buildReadmissionAlert(patient, providerId, liveThresholds);
         if (alert) {
           const isDup = await deduplicateAlert(providerId, patient._id, 'readmission_risk');
           if (isDup) {
@@ -509,7 +546,7 @@ async function generateAlertsForProvider(providerId, options = {}) {
       // ── 2. RISK_SCORE_INCREASE ────────────────────────────────────────────
       try {
         const prevScore = prevScoreMap.get(patientIdStr) ?? null;
-        const alert     = buildRiskIncreaseAlert(patient, prevScore, providerId);
+        const alert = buildRiskIncreaseAlert(patient, prevScore, providerId, liveThresholds);
         if (alert) {
           const isDup = await deduplicateAlert(providerId, patient._id, 'risk_score_increase');
           if (isDup) {
@@ -524,7 +561,7 @@ async function generateAlertsForProvider(providerId, options = {}) {
 
       // ── 3. CARE_GAP ───────────────────────────────────────────────────────
       try {
-        const alert = buildCareGapAlert(patient, providerId);
+        const alert = buildCareGapAlert(patient, providerId, liveThresholds);
         if (alert) {
           const isDup = await deduplicateAlert(providerId, patient._id, 'care_gap');
           if (isDup) {
@@ -560,7 +597,7 @@ async function generateAlertsForProvider(providerId, options = {}) {
           ordered: false,
         });
         result.created = inserted.length;
-        result.alerts  = inserted;
+        result.alerts = inserted;
         logger.info('[PredictiveAlert] Alerts created', {
           providerId,
           created: result.created,
@@ -569,7 +606,7 @@ async function generateAlertsForProvider(providerId, options = {}) {
       } catch (err) {
         // insertMany with ordered:false may partially succeed
         const writeErrors = err.writeErrors || [];
-        result.created    = alertsToInsert.length - writeErrors.length;
+        result.created = alertsToInsert.length - writeErrors.length;
         result.errors.push(`insertMany partial failure: ${err.message}`);
         logger.error('[PredictiveAlert] insertMany error', {
           providerId,
@@ -594,7 +631,7 @@ async function generateAlertsForProvider(providerId, options = {}) {
     // Fallback to synthetic when DB is unavailable
     if (err.name === 'MongoNetworkError' || err.name === 'MongooseServerSelectionError') {
       logger.warn('[PredictiveAlert] DB unavailable — returning synthetic alerts', { providerId });
-      result.alerts  = getSyntheticAlerts(providerId);
+      result.alerts = getSyntheticAlerts(providerId);
       result.created = result.alerts.length;
       result.synthetic = true;
     } else {
@@ -622,10 +659,10 @@ async function generateAlertsForProvider(providerId, options = {}) {
  */
 async function generateAlertsForAllProviders() {
   const summary = {
-    providers:    0,
+    providers: 0,
     totalCreated: 0,
     totalSkipped: 0,
-    errors:       [],
+    errors: [],
   };
 
   const started = Date.now();
@@ -634,8 +671,8 @@ async function generateAlertsForAllProviders() {
   try {
     const providers = await User.find(
       {
-        role:          { $in: ['doctor', 'clinic', 'hospital'] },
-        isActive:      true,
+        role: { $in: ['doctor', 'clinic', 'hospital'] },
+        isActive: true,
         accountStatus: 'approved',
       },
       { _id: 1, name: 1 }

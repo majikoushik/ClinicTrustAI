@@ -86,6 +86,18 @@ router.post('/', protect, authorize('doctor', 'clinic', 'hospital', 'provider'),
 
     // Save referral to database
     await referral.save();
+	
+	// Phase 2: emit Kafka event for ML consumer (fire-and-forget)
+    setImmediate(() => {
+      try {
+        const { emitReferralEvent } = require('../kafka/producer');
+        const { EVENT_TYPES }       = require('../kafka/events');
+        emitReferralEvent(referral._id.toString(), EVENT_TYPES.REFERRAL_STATUS_CHANGED, {
+          status:    referral.status,
+          patientId: referral.patient?.toString(),
+        });
+      } catch (_) {}
+    });
 
     // Notify receiving provider — fire-and-forget, non-fatal
     setImmediate(async () => {
